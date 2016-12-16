@@ -47,4 +47,4 @@ def au_to_pixels(width, height, distance, zoom):
 
 
 def get_data_file(name):
-    return os.path.join(LOCAL_DIR, "data", name)
+    return "file://" + os.path.join(LOCAL_DIR, "data", name + ".html")

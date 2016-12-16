@@ -1,0 +1,25 @@
+h1 {
+  text-align: center;
+}
+
+h3 {
+  margin-top: 40px;
+  margin-bottom: 0px;
+}
+
+.main {
+  margin: 10px;
+}
+
+.float-table {
+  float: right;
+  width: 250px;
+  margin-right: 0px;
+  border-width: 5px;
+  border-color: rgb(0, 0, 0);
+}
+
+.credits {
+  margin-top: 50px;
+  text-align: center;
+}

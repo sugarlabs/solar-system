@@ -48,8 +48,6 @@ class SolarSystem(Gtk.VBox):
         self.info_view = InfoView()
         self.info_view.connect("change-cursor", self._change_cursor)
 
-        self.set_screen(Screen.SOLAR_SYSTEM)
-
         adj = Gtk.Adjustment(10, 0.2, 100, 0.5, 1)
         s = Gtk.HScale()
         s.set_draw_value(False)
@@ -64,6 +62,7 @@ class SolarSystem(Gtk.VBox):
         s.connect("value-changed", self.change_speed)
         self.pack_start(s, False, False, 0)
 
+        self.set_screen(Screen.SOLAR_SYSTEM)
         self.show_all()
 
     def _body_selected(self, widget, body):
