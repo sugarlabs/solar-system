@@ -76,6 +76,7 @@ class SolarSystem(activity.Activity):
         if self.screen == Screen.SOLAR_SYSTEM:
             self.toolbarbox.set_can_go_back(False)
             self.toolbarbox.set_can_go_forward(False)
+            self.toolbarbox.enable_simulation_widgets()
 
             if self.info_view.get_parent() == self.box:
                 self.box.remove(self.info_view)
@@ -87,6 +88,7 @@ class SolarSystem(activity.Activity):
         elif self.screen == Screen.INFO:
             self.toolbarbox.set_can_go_back(self.info_view.view.can_go_back())
             self.toolbarbox.set_can_go_forward(self.info_view.view.can_go_forward())
+            self.toolbarbox.disable_simulation_widgets()
 
             if self.area.get_parent() == self.box:
                 self.box.remove(self.area)

@@ -126,10 +126,10 @@ class ToolbarView(Gtk.Toolbar):
             CelestialBodyType.NEPTUNE: None
         }
 
-        orbits_button = ToggleToolButton("show-orbits")
-        orbits_button.set_tooltip(_("Show planets orbits"))
-        orbits_button.connect("toggled", self._show_orbits_cb)
-        self.insert(orbits_button, -1)
+        self.orbits_button = ToggleToolButton("show-orbits")
+        self.orbits_button.set_tooltip(_("Show planets orbits"))
+        self.orbits_button.connect("toggled", self._show_orbits_cb)
+        self.insert(self.orbits_button, -1)
 
         self.insert(make_separator(False), -1)
 
@@ -145,27 +145,45 @@ class ToolbarView(Gtk.Toolbar):
         self.insert(make_separator(False), -1)
 
         adj = Gtk.Adjustment(1, 0.8, 500, 0.5, 1)
-        zoom_scale = Gtk.HScale()
-        zoom_scale.set_draw_value(False)
-        zoom_scale.set_adjustment(adj)
-        zoom_scale.set_size_request(200, 1)
-        zoom_scale.connect("value-changed", self._zoom_changed_cb)
+        self.zoom_scale = Gtk.HScale()
+        self.zoom_scale.set_draw_value(False)
+        self.zoom_scale.set_adjustment(adj)
+        self.zoom_scale.set_size_request(200, 1)
+        self.zoom_scale.connect("value-changed", self._zoom_changed_cb)
 
-        zoom_out = ToolButton("zoom-out")
-        zoom_out.set_tooltip(_("Zoom out"))
-        zoom_out.connect("clicked", self._zoom_out_cb, zoom_scale)
-        self.insert(zoom_out, -1)
+        self.zoom_out = ToolButton("zoom-out")
+        self.zoom_out.set_tooltip(_("Zoom out"))
+        self.zoom_out.connect("clicked", self._zoom_out_cb)
+        self.insert(self.zoom_out, -1)
 
         item = Gtk.ToolItem()
-        item.add(zoom_scale)
+        item.add(self.zoom_scale)
         self.insert(item, -1)
 
-        zoom_in = ToolButton("zoom-in")
-        zoom_in.set_tooltip(_("Zoom in"))
-        zoom_in.connect("clicked", self._zoom_in_cb, zoom_scale)
-        self.insert(zoom_in, -1)
+        self.zoom_in = ToolButton("zoom-in")
+        self.zoom_in.set_tooltip(_("Zoom in"))
+        self.zoom_in.connect("clicked", self._zoom_in_cb)
+        self.insert(self.zoom_in, -1)
 
         self.show_all()
+
+    def disable_simulation_widgets(self):
+        self.orbits_button.set_sensitive(False)
+        for planet in self.buttons:
+            self.buttons[planet].set_sensitive(False)
+
+        self.zoom_scale.set_sensitive(False)
+        self.zoom_out.set_sensitive(False)
+        self.zoom_in.set_sensitive(False)
+
+    def enable_simulation_widgets(self):
+        self.orbits_button.set_sensitive(True)
+        for planet in self.buttons:
+            self.buttons[planet].set_sensitive(True)
+
+        self.zoom_scale.set_sensitive(True)
+        self.zoom_out.set_sensitive(True)
+        self.zoom_in.set_sensitive(True)
 
     def _show_orbits_cb(self, button):
         self.emit("show-orbits", button.get_active())
@@ -176,23 +194,23 @@ class ToolbarView(Gtk.Toolbar):
     def _zoom_changed_cb(self, scale):
         self.emit("zoom-changed", scale.get_value())
 
-    def _zoom_out_cb(self, widget, scale):
-        new_value = scale.get_value() - 2.5
-        lower_value = scale.get_adjustment().get_lower()
+    def _zoom_out_cb(self, widget):
+        new_value = self.zoom_scale.get_value() - 2.5
+        lower_value = self.zoom_scale.get_adjustment().get_lower()
         if new_value < lower_value:
-            scale.set_value(lower_value)
+            self.zoom_scale.set_value(lower_value)
 
         else:
-            scale.set_value(new_value)
+            self.zoom_scale.set_value(new_value)
 
-    def _zoom_in_cb(self, widget, scale):
-        new_value = scale.get_value() + 2.5
-        upper = scale.get_adjustment().get_upper()
+    def _zoom_in_cb(self, widget):
+        new_value = self.zoom_scale.get_value() + 2.5
+        upper = self.zoom_scale.get_adjustment().get_upper()
         if new_value > upper:
-            scale.set_value(upper)
+            self.zoom_scale.set_value(upper)
 
         else:
-            scale.set_value(new_value)
+            self.zoom_scale.set_value(new_value)
 
 
 class ToolbarBox(SugarToolbarBox):
@@ -232,25 +250,25 @@ class ToolbarBox(SugarToolbarBox):
         self.toolbar.insert(make_separator(False), -1)
 
         adj = Gtk.Adjustment(1, 0, 15, 0.1, 1)
-        speed_scale = Gtk.HScale()
-        speed_scale.set_draw_value(False)
-        speed_scale.set_adjustment(adj)
-        speed_scale.set_size_request(200, 1)
-        speed_scale.connect("value-changed", self._speed_changed_cb)
+        self.speed_scale = Gtk.HScale()
+        self.speed_scale.set_draw_value(False)
+        self.speed_scale.set_adjustment(adj)
+        self.speed_scale.set_size_request(200, 1)
+        self.speed_scale.connect("value-changed", self._speed_changed_cb)
 
-        slow_button = ToolButton("speed-down")
-        slow_button.set_tooltip(_("Slow down"))
-        slow_button.connect("clicked", self._speed_down_cb, speed_scale)
-        self.toolbar.insert(slow_button, -1)
+        self.slow_button = ToolButton("speed-down")
+        self.slow_button.set_tooltip(_("Slow down"))
+        self.slow_button.connect("clicked", self._speed_down_cb)
+        self.toolbar.insert(self.slow_button, -1)
 
         item = Gtk.ToolItem()
-        item.add(speed_scale)
+        item.add(self.speed_scale)
         self.toolbar.insert(item, -1)
 
-        fast_button = ToolButton("speed-up")
-        fast_button.set_tooltip(_("Speed up"))
-        fast_button.connect("clicked", self._speed_up_cb, speed_scale)
-        self.toolbar.insert(fast_button, -1)
+        self.fast_button = ToolButton("speed-up")
+        self.fast_button.set_tooltip(_("Speed up"))
+        self.fast_button.connect("clicked", self._speed_up_cb)
+        self.toolbar.insert(self.fast_button, -1)
 
         self.toolbar.insert(make_separator(True), -1)
 
@@ -263,23 +281,35 @@ class ToolbarBox(SugarToolbarBox):
     def set_can_go_forward(self, can):
         self.toolbar_info.forward_button.set_sensitive(can)
 
-    def _speed_down_cb(self, widget, scale):
-        new_value = scale.get_value() - 0.5
-        lower_value = scale.get_adjustment().get_lower()
+    def disable_simulation_widgets(self):
+        self.toolbar_view.disable_simulation_widgets()
+        self.speed_scale.set_sensitive(False)
+        self.slow_button.set_sensitive(False)
+        self.fast_button.set_sensitive(False)
+
+    def enable_simulation_widgets(self):
+        self.toolbar_view.enable_simulation_widgets()
+        self.speed_scale.set_sensitive(True)
+        self.slow_button.set_sensitive(True)
+        self.fast_button.set_sensitive(True)
+
+    def _speed_down_cb(self, widget):
+        new_value = self.speed_scale.get_value() - 0.5
+        lower_value = self.speed_scale.get_adjustment().get_lower()
         if new_value < lower_value:
-            scale.set_value(lower_value)
+            self.speed_scale.set_value(lower_value)
 
         else:
-            scale.set_value(new_value)
+            self.speed_scale.set_value(new_value)
 
-    def _speed_up_cb(self, widget, scale):
-        new_value = scale.get_value() + 0.5
-        upper = scale.get_adjustment().get_upper()
+    def _speed_up_cb(self, widget):
+        new_value = self.speed_scale.get_value() + 0.5
+        upper = self.speed_scale.get_adjustment().get_upper()
         if new_value > upper:
-            scale.set_value(upper)
+            self.speed_scale.set_value(upper)
 
         else:
-            scale.set_value(new_value)
+            self.speed_scale.set_value(new_value)
 
     def _show_simulation_cb(self, widget):
         self.emit("show-simulation")
