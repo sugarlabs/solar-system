@@ -160,9 +160,10 @@ class Area(Gtk.DrawingArea):
                     continue
 
                 radius = get_planet_scale_radius(self.width, self.height, satellite, self.zoom)
-                context.set_source_rgb(*satellite.color)
-                context.arc(x + satellite.x, y + satellite.y, radius, 0, 2 * math.pi)
-                context.fill()
+                if radius >= 1:
+                    context.set_source_rgb(*satellite.color)
+                    context.arc(x + satellite.x, y + satellite.y, radius, 0, 2 * math.pi)
+                    context.fill()
 
         for body in self.get_all_bodies():
             if not body.preselected or not body.visible:

@@ -51,6 +51,8 @@ class CelestialBodyType:
     URANUS            = 12
     NEPTUNE           = 13
     MOON              = 14
+    FOBOS             = 15
+    DEIMOS            = 16
 
 
 class Color:
@@ -68,6 +70,8 @@ class Color:
     URANUS  = (0.654901960784, 0.772549019608, 0.823529411765)
     NEPTUNE = (0.388235294118, 0.541176470588, 0.949019607843)
     MOON    = (0.8, 0.8, 0.8)
+    FOBOS   = (0.5, 0.5, 0.5)
+    DEIMOS  = (0.65, 0.65, 0.65)
 
 
 class OrbitTime:  # Days
@@ -80,7 +84,9 @@ class OrbitTime:  # Days
     URANUS  = 30777.895
     NEPTUNE = 60190
 
-    MOON = 27.32
+    MOON   = 27.32
+    FOBOS  = 0.31891023
+    DEIMOS = 1.262
 
 
 class Radius:  # Km
@@ -95,7 +101,9 @@ class Radius:  # Km
     URANUS  = 25362
     NEPTUNE = 24622
 
-    MOON = 1737
+    MOON   = 1737
+    FOBOS  = 11
+    DEIMOS = 12
 
 
 class OrbitalRadius:  # AU
@@ -109,6 +117,8 @@ class OrbitalRadius:  # AU
     NEPTUNE = 30.0689634
 
     MOON    = 0.00256955  # To earth
+    FOBOS   = 0.0000626827104  # To mars
+    DEIMOS  = 0.00015682041  # To mars
 
 
 class BodyName:
@@ -124,3 +134,5 @@ class BodyName:
     NEPTUNE = _("Neptune")
 
     MOON    = _("Moon")
+    FOBOS   = _("Fobos")
+    DEIMOS  = _("Deimos")

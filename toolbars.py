@@ -144,7 +144,7 @@ class ToolbarView(Gtk.Toolbar):
 
         self.insert(make_separator(False), -1)
 
-        adj = Gtk.Adjustment(1, 0.8, 50, 0.5, 1)
+        adj = Gtk.Adjustment(1, 0.8, 500, 0.5, 1)
         zoom_scale = Gtk.HScale()
         zoom_scale.set_draw_value(False)
         zoom_scale.set_adjustment(adj)
@@ -231,7 +231,7 @@ class ToolbarBox(SugarToolbarBox):
 
         self.toolbar.insert(make_separator(False), -1)
 
-        adj = Gtk.Adjustment(1, 0, 5, 0.1, 1)
+        adj = Gtk.Adjustment(1, 0, 15, 0.1, 1)
         speed_scale = Gtk.HScale()
         speed_scale.set_draw_value(False)
         speed_scale.set_adjustment(adj)

@@ -113,6 +113,32 @@ class Moon(NaturalSatellite):
         self.name = BodyName.MOON
 
 
+class Fobos(NaturalSatellite):
+
+    def __init__(self, mars=None):
+        NaturalSatellite.__init__(self, planet=mars)
+
+        self.type = CelestialBodyType.FOBOS
+        self.color = Color.FOBOS
+        self.orbit_time = OrbitTime.FOBOS
+        self.radius = Radius.FOBOS
+        self.orbital_radius = OrbitalRadius.FOBOS
+        self.name = BodyName.FOBOS
+
+
+class Deimos(NaturalSatellite):
+
+    def __init__(self, mars=None):
+        NaturalSatellite.__init__(self, planet=mars)
+
+        self.type = CelestialBodyType.DEIMOS
+        self.color = Color.DEIMOS
+        self.orbit_time = OrbitTime.DEIMOS
+        self.radius = Radius.DEIMOS
+        self.orbital_radius = OrbitalRadius.DEIMOS
+        self.name = BodyName.DEIMOS
+
+
 class Mercury(Planet):
 
     def __init__(self, sun=None):
@@ -163,6 +189,7 @@ class Mars(Planet):
         self.orbit_time = OrbitTime.MARS
         self.radius = Radius.MARS
         self.orbital_radius = OrbitalRadius.MARS
+        self.natural_satellites = [Fobos(mars=self), Deimos(mars=self)]
         self.name = BodyName.MARS
 
 
