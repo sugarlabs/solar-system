@@ -26,6 +26,7 @@ from utils import get_body_name
 from constants import Screen
 from constants import BodyName
 from constants import CelestialBodyType
+from constants import Speed
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -213,6 +214,82 @@ class ToolbarView(Gtk.Toolbar):
             self.zoom_scale.set_value(new_value)
 
 
+class ToolbarSpeed(Gtk.Toolbar):
+
+    __gsignals__ = {
+        "speed-changed": (GObject.SIGNAL_RUN_FIRST, None, [float]),
+    }
+
+    def __init__(self):
+        Gtk.Toolbar.__init__(self)
+
+        self.button = ToolbarButton(page=self, icon_name="media-playback-stop")
+        self.playing = True
+        self.speed = None
+
+        self.stop_play = ToolButton("media-playback-stop")
+        self.stop_play.set_tooltip(_("Stop"))
+        self.stop_play.connect("clicked", self._stop_play)
+        self.insert(self.stop_play, -1)
+
+        self.slow_button = RadioToolButton(group=None, icon_name="slow-walk-milton-raposo")
+        self.slow_button.set_tooltip(_("Run slow"))
+        self.slow_button.connect("clicked", self._speed_changed_cb, Speed.SLOW)
+        self.insert(self.slow_button, -1)
+
+        self.normal_button = RadioToolButton(group=self.slow_button, icon_name="walking")
+        self.normal_button.set_tooltip(_("Run Normal"))
+        self.normal_button.connect("clicked", self._speed_changed_cb, Speed.NORMAL)
+        self.insert(self.normal_button, -1)
+
+        self.fast_button = RadioToolButton(group=self.slow_button, icon_name="running")
+        self.fast_button.set_tooltip(_("Run fast"))
+        self.fast_button.connect("clicked", self._speed_changed_cb, Speed.FAST)
+        self.insert(self.fast_button, -1)
+
+        self.normal_button.set_active(True)
+
+        self.show_all()
+
+    def _stop_play(self, button=None):
+        self.playing = not self.playing
+
+        if self.playing:
+            self.stop_play.set_icon_name("media-playback-stop")
+            self.stop_play.set_tooltip(_("Stop"))
+            self.button.set_icon_name("media-playback-stop")
+
+            self.emit("speed-changed", self.speed)
+
+        else:
+            self.stop_play.set_icon_name("media-playback-start")
+            self.stop_play.set_tooltip(_("Start"))
+            self.button.set_icon_name("media-playback-start")
+
+            self.emit("speed-changed", Speed.STOPPED)
+
+    def _speed_changed_cb(self, button, speed):
+        if not self.playing:
+            self.speed = speed
+            self._stop_play()
+
+        else:
+            self.emit("speed-changed", speed)
+            self.speed = speed
+
+    def enable(self):
+        self.set_sensitive_buttons(True)
+
+    def disable(self):
+        self.set_sensitive_buttons(False)
+
+    def set_sensitive_buttons(self, sensitive):
+        self.stop_play.set_sensitive(sensitive)
+        self.slow_button.set_sensitive(sensitive)
+        self.normal_button.set_sensitive(sensitive)
+        self.fast_button.set_sensitive(sensitive)
+
+
 class ToolbarBox(SugarToolbarBox):
 
     __gsignals__ = {
@@ -247,28 +324,9 @@ class ToolbarBox(SugarToolbarBox):
         self.toolbar_view.connect("zoom-changed", self._zoom_changed_cb)
         self.toolbar.insert(self.toolbar_view.button, -1)
 
-        self.toolbar.insert(make_separator(False), -1)
-
-        adj = Gtk.Adjustment(1, 0, 15, 0.1, 1)
-        self.speed_scale = Gtk.HScale()
-        self.speed_scale.set_draw_value(False)
-        self.speed_scale.set_adjustment(adj)
-        self.speed_scale.set_size_request(200, 1)
-        self.speed_scale.connect("value-changed", self._speed_changed_cb)
-
-        self.slow_button = ToolButton("speed-down")
-        self.slow_button.set_tooltip(_("Slow down"))
-        self.slow_button.connect("clicked", self._speed_down_cb)
-        self.toolbar.insert(self.slow_button, -1)
-
-        item = Gtk.ToolItem()
-        item.add(self.speed_scale)
-        self.toolbar.insert(item, -1)
-
-        self.fast_button = ToolButton("speed-up")
-        self.fast_button.set_tooltip(_("Speed up"))
-        self.fast_button.connect("clicked", self._speed_up_cb)
-        self.toolbar.insert(self.fast_button, -1)
+        self.toolbar_speed = ToolbarSpeed()
+        self.toolbar_speed.connect("speed-changed", self._speed_changed_cb)
+        self.toolbar.insert(self.toolbar_speed.button, -1)
 
         self.toolbar.insert(make_separator(True), -1)
 
@@ -283,33 +341,11 @@ class ToolbarBox(SugarToolbarBox):
 
     def disable_simulation_widgets(self):
         self.toolbar_view.disable_simulation_widgets()
-        self.speed_scale.set_sensitive(False)
-        self.slow_button.set_sensitive(False)
-        self.fast_button.set_sensitive(False)
+        self.toolbar_speed.disable()
 
     def enable_simulation_widgets(self):
         self.toolbar_view.enable_simulation_widgets()
-        self.speed_scale.set_sensitive(True)
-        self.slow_button.set_sensitive(True)
-        self.fast_button.set_sensitive(True)
-
-    def _speed_down_cb(self, widget):
-        new_value = self.speed_scale.get_value() - 0.5
-        lower_value = self.speed_scale.get_adjustment().get_lower()
-        if new_value < lower_value:
-            self.speed_scale.set_value(lower_value)
-
-        else:
-            self.speed_scale.set_value(new_value)
-
-    def _speed_up_cb(self, widget):
-        new_value = self.speed_scale.get_value() + 0.5
-        upper = self.speed_scale.get_adjustment().get_upper()
-        if new_value > upper:
-            self.speed_scale.set_value(upper)
-
-        else:
-            self.speed_scale.set_value(new_value)
+        self.toolbar_speed.enable()
 
     def _show_simulation_cb(self, widget):
         self.emit("show-simulation")
@@ -323,8 +359,8 @@ class ToolbarBox(SugarToolbarBox):
     def _go_forward_cb(self, widget):
         self.emit("go-forward")
 
-    def _speed_changed_cb(self, scale):
-        self.emit("speed-changed", scale.get_value())
+    def _speed_changed_cb(self, toolbar, speed):
+        self.emit("speed-changed", speed)
 
     def _show_orbits_cb(self, toolbar, show):
         self.emit("show-orbits", show)

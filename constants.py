@@ -136,3 +136,10 @@ class BodyName:
     MOON    = _("Moon")
     FOBOS   = _("Fobos")
     DEIMOS  = _("Deimos")
+
+
+class Speed:
+    STOPPED = 0
+    SLOW = 1
+    NORMAL  = 5
+    FAST    = 10

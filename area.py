@@ -22,6 +22,7 @@ import math
 
 from constants import Color
 from constants import BodyName
+from constants import Speed
 from utils import get_sun_scale_radius
 from utils import get_planet_scale_radius
 from utils import au_to_pixels
@@ -46,7 +47,7 @@ class Area(Gtk.DrawingArea):
 
         self.width = 0
         self.height = 0
-        self.speed = 1
+        self.speed = Speed.SLOW
         self.zoom = 1
         self.big_planets = False
         self.show_orbits = False
