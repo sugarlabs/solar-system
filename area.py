@@ -57,6 +57,7 @@ class Area(Gtk.DrawingArea):
 
         self.draw_x = None
         self.draw_y = None
+        self.select_body = True
 
         self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK |
                         Gdk.EventMask.BUTTON_RELEASE_MASK |
@@ -96,17 +97,23 @@ class Area(Gtk.DrawingArea):
     def __press_cb(self, widget, event):
         self.draw_x = event.x
         self.draw_y = event.y
+        self.select_body = True
 
     def __release_cb(self, widget, event):
         self.draw_x = None
         self.draw_y = None
 
-        for body in self.get_all_bodies():
-            if body.preselected:
-                self.emit("body-selected", body.type)
+        if self.select_body:
+            for body in self.get_all_bodies():
+                if body.preselected:
+                    self.emit("body-selected", body.type)
+
+        self.select_body = True
 
     def __motion_cb(self, widget, event):
         if self.draw_x is not None:
+            self.select_body = False
+
             self.x += (event.x - self.draw_x)
             self.y += (event.y - self.draw_y)
 
