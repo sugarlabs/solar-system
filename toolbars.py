@@ -111,7 +111,6 @@ class ToolbarView(Gtk.Toolbar):
     __gsignals__ = {
         "show-orbits": (GObject.SIGNAL_RUN_FIRST, None, [bool]),
         "show-body": (GObject.SIGNAL_RUN_FIRST, None, [int, bool]),
-        "zoom-changed": (GObject.SIGNAL_RUN_FIRST, None, [float]),
     }
 
     def __init__(self):
@@ -146,29 +145,6 @@ class ToolbarView(Gtk.Toolbar):
 
             self.buttons[planet] = button
 
-        self.insert(make_separator(False), -1)
-
-        adj = Gtk.Adjustment(1, 0.8, 500, 0.5, 1)
-        self.zoom_scale = Gtk.HScale()
-        self.zoom_scale.set_draw_value(False)
-        self.zoom_scale.set_adjustment(adj)
-        self.zoom_scale.set_size_request(200, 1)
-        self.zoom_scale.connect("value-changed", self._zoom_changed_cb)
-
-        self.zoom_out = ToolButton("zoom-out")
-        self.zoom_out.set_tooltip(_("Zoom out"))
-        self.zoom_out.connect("clicked", self._zoom_out_cb)
-        self.insert(self.zoom_out, -1)
-
-        item = Gtk.ToolItem()
-        item.add(self.zoom_scale)
-        self.insert(item, -1)
-
-        self.zoom_in = ToolButton("zoom-in")
-        self.zoom_in.set_tooltip(_("Zoom in"))
-        self.zoom_in.connect("clicked", self._zoom_in_cb)
-        self.insert(self.zoom_in, -1)
-
         self.show_all()
 
     def disable_simulation_widgets(self):
@@ -176,45 +152,16 @@ class ToolbarView(Gtk.Toolbar):
         for planet in self.buttons:
             self.buttons[planet].set_sensitive(False)
 
-        self.zoom_scale.set_sensitive(False)
-        self.zoom_out.set_sensitive(False)
-        self.zoom_in.set_sensitive(False)
-
     def enable_simulation_widgets(self):
         self.orbits_button.set_sensitive(True)
         for planet in self.buttons:
             self.buttons[planet].set_sensitive(True)
-
-        self.zoom_scale.set_sensitive(True)
-        self.zoom_out.set_sensitive(True)
-        self.zoom_in.set_sensitive(True)
 
     def _show_orbits_cb(self, button):
         self.emit("show-orbits", button.get_active())
 
     def _show_planet_cb(self, button, planet):
         self.emit("show-body", planet, button.get_active())
-
-    def _zoom_changed_cb(self, scale):
-        self.emit("zoom-changed", scale.get_value())
-
-    def _zoom_out_cb(self, widget):
-        new_value = self.zoom_scale.get_value() - 2.5
-        lower_value = self.zoom_scale.get_adjustment().get_lower()
-        if new_value < lower_value:
-            self.zoom_scale.set_value(lower_value)
-
-        else:
-            self.zoom_scale.set_value(new_value)
-
-    def _zoom_in_cb(self, widget):
-        new_value = self.zoom_scale.get_value() + 2.5
-        upper = self.zoom_scale.get_adjustment().get_upper()
-        if new_value > upper:
-            self.zoom_scale.set_value(upper)
-
-        else:
-            self.zoom_scale.set_value(new_value)
 
 
 class ToolbarSpeed(Gtk.Toolbar):
@@ -382,12 +329,34 @@ class ToolbarBox(SugarToolbarBox):
         self.toolbar_view = ToolbarView()
         self.toolbar_view.connect("show-orbits", self._show_orbits_cb)
         self.toolbar_view.connect("show-body", self._show_body_cb)
-        self.toolbar_view.connect("zoom-changed", self._zoom_changed_cb)
         self.toolbar.insert(self.toolbar_view.button, -1)
 
         self.toolbar_speed = ToolbarSpeed()
         self.toolbar_speed.connect("speed-changed", self._speed_changed_cb)
         self.toolbar.insert(self.toolbar_speed.button, -1)
+
+        self.toolbar.insert(make_separator(False), -1)
+
+        adj = Gtk.Adjustment(1, 0.8, 500, 0.5, 1)
+        self.zoom_scale = Gtk.HScale()
+        self.zoom_scale.set_draw_value(False)
+        self.zoom_scale.set_adjustment(adj)
+        self.zoom_scale.set_size_request(200, 1)
+        self.zoom_scale.connect("value-changed", self._zoom_changed_cb)
+
+        self.zoom_out = ToolButton("zoom-out")
+        self.zoom_out.set_tooltip(_("Zoom out"))
+        self.zoom_out.connect("clicked", self._zoom_out_cb)
+        self.toolbar.insert(self.zoom_out, -1)
+
+        item = Gtk.ToolItem()
+        item.add(self.zoom_scale)
+        self.toolbar.insert(item, -1)
+
+        self.zoom_in = ToolButton("zoom-in")
+        self.zoom_in.set_tooltip(_("Zoom in"))
+        self.zoom_in.connect("clicked", self._zoom_in_cb)
+        self.toolbar.insert(self.zoom_in, -1)
 
         self.toolbar.insert(make_separator(True), -1)
 
@@ -418,12 +387,36 @@ class ToolbarBox(SugarToolbarBox):
         self.toolbar_info.forward_button.set_sensitive(can)
 
     def disable_simulation_widgets(self):
+        self.zoom_scale.set_sensitive(False)
+        self.zoom_out.set_sensitive(False)
+        self.zoom_in.set_sensitive(False)
         self.toolbar_view.disable_simulation_widgets()
         self.toolbar_speed.disable()
 
     def enable_simulation_widgets(self):
+        self.zoom_scale.set_sensitive(True)
+        self.zoom_out.set_sensitive(True)
+        self.zoom_in.set_sensitive(True)
         self.toolbar_view.enable_simulation_widgets()
         self.toolbar_speed.enable()
+
+    def _zoom_out_cb(self, widget):
+        new_value = self.zoom_scale.get_value() - 2.5
+        lower_value = self.zoom_scale.get_adjustment().get_lower()
+        if new_value < lower_value:
+            self.zoom_scale.set_value(lower_value)
+
+        else:
+            self.zoom_scale.set_value(new_value)
+
+    def _zoom_in_cb(self, widget):
+        new_value = self.zoom_scale.get_value() + 2.5
+        upper = self.zoom_scale.get_adjustment().get_upper()
+        if new_value > upper:
+            self.zoom_scale.set_value(upper)
+
+        else:
+            self.zoom_scale.set_value(new_value)
 
     def _show_simulation_cb(self, widget):
         self.emit("show-simulation")
@@ -446,8 +439,8 @@ class ToolbarBox(SugarToolbarBox):
     def _show_body_cb(self, toolbar, body, show):
         self.emit("show-body", body, show)
 
-    def _zoom_changed_cb(self, toolbar, zoom):
-        self.emit("zoom-changed", zoom)
+    def _zoom_changed_cb(self, scale):
+        self.emit("zoom-changed", self.zoom_scale.get_value())
 
     def select_screen(self, screen):
         self.toolbar_info.select_screen(screen)
