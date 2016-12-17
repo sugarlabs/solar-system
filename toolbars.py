@@ -32,11 +32,14 @@ import gi
 gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gtk
+from gi.repository import Gdk
 from gi.repository import GObject
 
+from sugar3.graphics import style
+from sugar3.graphics.icon import Icon
 from sugar3.graphics.toolbutton import ToolButton
-from sugar3.graphics.radiotoolbutton import RadioToolButton
 from sugar3.graphics.toolbarbox import ToolbarButton
+from sugar3.graphics.radiotoolbutton import RadioToolButton
 from sugar3.graphics.toggletoolbutton import ToggleToolButton
 from sugar3.graphics.toolbarbox import ToolbarBox as SugarToolbarBox
 from sugar3.activity.widgets import StopButton
@@ -290,6 +293,64 @@ class ToolbarSpeed(Gtk.Toolbar):
         self.fast_button.set_sensitive(sensitive)
 
 
+class HelpButton(Gtk.ToolItem):
+
+    def __init__(self, **kwargs):
+        GObject.GObject.__init__(self)
+
+        help_button = ToolButton("toolbar-help")
+        help_button.set_tooltip(_(
+            "What should you know before using Solar System?"))
+        self.add(help_button)
+
+        self._palette = help_button.get_palette()
+
+        sw = Gtk.ScrolledWindow()
+        sw.set_size_request(int(Gdk.Screen.width() / 2.8), 200)
+        sw.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+
+        self._max_text_width = int(Gdk.Screen.width() / 3) - 600
+        self._vbox = Gtk.Box()
+        self._vbox.set_orientation(Gtk.Orientation.VERTICAL)
+        self._vbox.set_homogeneous(False)
+        self._vbox.set_border_width(10)
+
+        hbox = Gtk.Box()
+        hbox.pack_start(self._vbox, False, True, 0)
+
+        sw.add_with_viewport(hbox)
+
+        self._palette.set_content(sw)
+        sw.show_all()
+
+        help_button.connect('clicked', self.__help_button_clicked_cb)
+
+    def __help_button_clicked_cb(self, button):
+        self._palette.popup(immediate=True, state=1)
+
+    def add_section(self, section_text):
+        hbox = Gtk.Box()
+        label = Gtk.Label()
+        label.set_use_markup(True)
+        label.set_markup('<b>%s</b>' % section_text)
+        label.set_line_wrap(True)
+        hbox.pack_start(label, False, False, 0)
+        hbox.show_all()
+        self._vbox.pack_start(hbox, False, False, padding=5)
+
+    def add_paragraph(self, text, icon=None):
+        hbox = Gtk.Box()
+        label = Gtk.Label(label=text)
+        label.set_justify(Gtk.Justification.LEFT)
+        label.set_line_wrap(True)
+        hbox.pack_start(label, False, False, 0)
+        if icon is not None:
+            _icon = Icon(icon_name=icon)
+            hbox.add(_icon)
+        hbox.show_all()
+        self._vbox.pack_start(hbox, False, False, padding=5)
+
+
 class ToolbarBox(SugarToolbarBox):
 
     __gsignals__ = {
@@ -330,8 +391,25 @@ class ToolbarBox(SugarToolbarBox):
 
         self.toolbar.insert(make_separator(True), -1)
 
+        help_button = HelpButton()
+        self.toolbar.insert(help_button, -1)
+
         stop_button = StopButton(activity)
         self.toolbar.insert(stop_button, -1)
+
+        self.make_help(help_button)
+
+    def make_help(self, button):
+        button.add_section(_("About scales"))
+        button.add_paragraph(_("The planets radius are on a scale with each other,\n") +\
+                             _("but not with respect to distances (which in turn,\n") +\
+                             _("are on scale with each other), and the Sun radius\n") +\
+                             _("does not respect either of the two scales.\n"))
+
+        button.add_section(_("Why did I make that decision?"))
+        button.add_paragraph(_("Just because if I kept all the distances to the\n") +\
+                             _("same scale, you could not see anything (due to the\n") +\
+                             _("immense size of the space)."))
 
     def set_can_back_back(self, can):
         self.toolbar_info.button_back.set_sensitive(can)
