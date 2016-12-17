@@ -131,6 +131,7 @@ class ToolbarView(Gtk.Toolbar):
 
         self.orbits_button = ToggleToolButton("show-orbits")
         self.orbits_button.set_tooltip(_("Show planets orbits"))
+        self.orbits_button.set_active(True)
         self.orbits_button.connect("toggled", self._show_orbits_cb)
         self.insert(self.orbits_button, -1)
 
@@ -197,7 +198,7 @@ class ToolbarSpeed(Gtk.Toolbar):
         self.fast_button.connect("clicked", self._speed_changed_cb, Speed.FAST)
         self.insert(self.fast_button, -1)
 
-        self.normal_button.set_active(True)
+        self.slow_button.set_active(True)
 
         self.show_all()
 
@@ -337,7 +338,7 @@ class ToolbarBox(SugarToolbarBox):
 
         self.toolbar.insert(make_separator(False), -1)
 
-        adj = Gtk.Adjustment(1, 0.8, 500, 0.5, 1)
+        adj = Gtk.Adjustment(16.5, 0.8, 75, 0.5, 1)
         self.zoom_scale = Gtk.HScale()
         self.zoom_scale.set_draw_value(False)
         self.zoom_scale.set_adjustment(adj)

@@ -48,9 +48,9 @@ class Area(Gtk.DrawingArea):
         self.width = 0
         self.height = 0
         self.speed = Speed.SLOW
-        self.zoom = 1
+        self.zoom = 16.5
         self.big_planets = False
-        self.show_orbits = False
+        self.show_orbits = True
         self.sun = Sun()
         self.centered = self.sun
         self.x = 0
