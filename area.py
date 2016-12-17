@@ -19,7 +19,6 @@
 # Boston, MA 02111-1307, USA.
 
 import math
-import datetime
 
 from constants import Color
 from constants import BodyName
@@ -48,10 +47,9 @@ class Area(Gtk.DrawingArea):
         self.width = 0
         self.height = 0
         self.speed = 1
-        self.zoom = 10
+        self.zoom = 1
         self.big_planets = False
         self.show_orbits = False
-        self.datetime = datetime.datetime.now()
         self.sun = Sun()
         self.centered = self.sun
         self.x = 0
@@ -131,6 +129,9 @@ class Area(Gtk.DrawingArea):
 
     def _draw_celestial_bodies(self, context):
         for planet in self.sun.planets:
+            if not planet.visible:
+                continue
+
             radius = get_planet_scale_radius(self.width, self.height, planet, self.zoom)
             if self.big_planets:
                 radius = min(10 * radius, 35)
@@ -148,24 +149,29 @@ class Area(Gtk.DrawingArea):
                 context.stroke()
 
             for satellite in planet.natural_satellites:
+                if not satellite.visible:
+                    continue
+
                 radius = get_planet_scale_radius(self.width, self.height, satellite, self.zoom)
                 context.set_source_rgb(*satellite.color)
                 context.arc(x + satellite.x, y + satellite.y, radius, 0, 2 * math.pi)
                 context.fill()
 
         for body in self.get_all_bodies():
+            if not body.preselected or not body.visible:
+                continue
+
             x = self.x + body.x + self.width / 2.0
             y = self.y + body.y + self.height / 2.0
 
             if self.big_planets:
                 radius = min(10 * radius, 35)
 
-            if body.preselected:
-                context.set_source_rgb(*Color.SELECTED)
-                context.arc(x, y, self.get_body_radius(body), 0, 2 * math.pi)
-                context.stroke()
+            context.set_source_rgb(*Color.SELECTED)
+            context.arc(x, y, self.get_body_radius(body), 0, 2 * math.pi)
+            context.stroke()
 
-                break
+            break
 
         radius = get_sun_scale_radius(self.width, self.height, self.zoom)
         context.set_source_rgb(*self.sun.color)
@@ -196,3 +202,18 @@ class Area(Gtk.DrawingArea):
             x = self.x + body.x + self.width / 2.0
             y = self.y + body.y + self.height / 2.0
             body.preselected = event.x > x - radius and event.x < x + radius and event.y > y - radius and event.y < y + radius
+
+    def set_show_orbits(self, orbits):
+        self.show_orbits = orbits
+
+    def set_body_visible(self, body_type, visible):
+        for body in self.get_all_bodies():
+            if body.type == body_type:
+                body.visible = visible
+                break
+
+    def set_speed(self, speed):
+        self.speed = speed
+
+    def set_zoom(self, zoom):
+        self.zoom = zoom

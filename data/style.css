@@ -23,3 +23,17 @@ h3 {
   margin-top: 50px;
   text-align: center;
 }
+
+.menu {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.menu > p {
+  line-height: 50%;
+  font-size: 24px;
+}
+
+.list-group-item {
+  text-align: center;
+}

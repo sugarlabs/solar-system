@@ -25,6 +25,10 @@ from constants import Radius
 from constants import OrbitalRadius
 from constants import AU_KM
 from constants import LOCAL_DIR
+from constants import CelestialBodyType
+from constants import BodyName
+
+from gi.repository import Gtk
 
 
 def get_sun_scale_radius(width, height, zoom):
@@ -48,3 +52,74 @@ def au_to_pixels(width, height, distance, zoom):
 
 def get_data_file(name):
     return "file://" + os.path.join(LOCAL_DIR, "data", name + ".html")
+
+
+def make_separator(expand=False):
+    separator = Gtk.SeparatorToolItem()
+    if expand:
+        separator.set_expand(True)
+        separator.props.draw = False
+
+    return separator
+
+
+def get_icon_name(body):
+    if body == CelestialBodyType.MERCURY:
+        return "mercury"
+
+    elif body == CelestialBodyType.VENUS:
+        return "venus"
+
+    elif body == CelestialBodyType.EARTH:
+        return "earth"
+
+    elif body == CelestialBodyType.MARS:
+        return "mars"
+
+    elif body == CelestialBodyType.JUPITER:
+        return "jupiter"
+
+    elif body == CelestialBodyType.SATURN:
+        return "saturn"
+
+    elif body == CelestialBodyType.URANUS:
+        return "uranus"
+
+    elif body == CelestialBodyType.NEPTUNE:
+        return "neptune"
+
+    return ""
+
+
+def get_body_name(body):
+    if body == CelestialBodyType.SUN:
+        return BodyName.SUN
+
+    elif body == CelestialBodyType.MERCURY:
+        return BodyName.MERCURY
+
+    elif body == CelestialBodyType.VENUS:
+        return BodyName.VENUS
+
+    elif body == CelestialBodyType.EARTH:
+        return BodyName.EARTH
+
+    elif body == CelestialBodyType.MARS:
+        return BodyName.MARS
+
+    elif body == CelestialBodyType.JUPITER:
+        return BodyName.JUPITER
+
+    elif body == CelestialBodyType.SATURN:
+        return BodyName.SATURN
+
+    elif body == CelestialBodyType.URANUS:
+        return BodyName.URANUS
+
+    elif body == CelestialBodyType.NEPTUNE:
+        return BodyName.NEPTUNE
+
+    elif body == CelestialBodyType.MOON:
+        return BodyName.MOON
+
+    return _("Unknown")

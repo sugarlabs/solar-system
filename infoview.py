@@ -41,6 +41,8 @@ class InfoView(Gtk.VBox):
 
     __gsignals__ = {
         "change-cursor": (GObject.SIGNAL_RUN_FIRST, None, [int]),
+        "can-go-back": (GObject.SIGNAL_RUN_FIRST, None, [bool]),
+        "can-go-forward": (GObject.SIGNAL_RUN_FIRST, None, [bool]),
     }
 
     def __init__(self):
@@ -52,13 +54,18 @@ class InfoView(Gtk.VBox):
         self.pack_start(self.scroll, True, True, 0)
 
         self.view = WebView()
+        self.view.connect("load-finished", self._load_finished_cb)
         self.scroll.add(self.view)
+
+    def _load_finished_cb(self, widget, frame):
+        self.emit("can-go-back", self.view.can_go_back())
+        self.emit("can-go-forward", self.view.can_go_forward())
 
     def set_body(self, body):
         self.body = body
-        self.emit("change-cursor", Cursor.LOADING)
+        #self.emit("change-cursor", Cursor.LOADING)
         self.load_info(body)
-        self.emit("change-cursor", Cursor.ARROW)
+        #self.emit("change-cursor", Cursor.ARROW)
 
         self.show_all()
 
@@ -117,3 +124,11 @@ class InfoView(Gtk.VBox):
 
     def load_file(self, file_path):
         self.view.open(file_path)
+
+    def back(self):
+        if self.view.can_go_back():
+            self.view.go_back()
+
+    def forward(self):
+        if self.view.can_go_forward():
+            self.view.go_forward()

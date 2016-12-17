@@ -35,6 +35,7 @@ class CelestialBody(object):
         self.y = 0
         self.color = (0, 0, 0)
         self.preselected = False
+        self.visible = True
 
         # Data values
         self.radius = 0
@@ -79,7 +80,7 @@ class NaturalSatellite(OrbitCelestialBody):
 
     def calculate_position(self, width, height, zoom):
         radius = km_to_pixels(width, height, self.radius, zoom)
-        distance = au_to_pixels(width, height, self.orbital_radius, zoom) + get_planet_scale_radius(width, height, self.around_the, zoom) + radius
+        distance = au_to_pixels(width, height, self.orbital_radius, zoom) + get_planet_scale_radius(width, height, self.around_the, zoom) + radius * 2 + zoom
         self.x = distance * math.sin(self.angle * math.pi / 180.0)
         self.y = distance * math.cos(self.angle * math.pi / 180.0)
 
