@@ -139,6 +139,58 @@ class Deimos(NaturalSatellite):
         self.name = BodyName.DEIMOS
 
 
+class Io(NaturalSatellite):
+
+    def __init__(self, jupiter=None):
+        NaturalSatellite.__init__(self, planet=jupiter)
+
+        self.type = CelestialBodyType.IO
+        self.color = Color.IO
+        self.orbit_time = OrbitTime.IO
+        self.radius = Radius.IO
+        self.orbital_radius = OrbitalRadius.IO
+        self.name = BodyName.IO
+
+
+class Europa(NaturalSatellite):
+
+    def __init__(self, jupiter=None):
+        NaturalSatellite.__init__(self, planet=jupiter)
+
+        self.type = CelestialBodyType.EUROPA
+        self.color = Color.EUROPA
+        self.orbit_time = OrbitTime.EUROPA
+        self.radius = Radius.EUROPA
+        self.orbital_radius = OrbitalRadius.EUROPA
+        self.name = BodyName.EUROPA
+
+
+class Ganymede(NaturalSatellite):
+
+    def __init__(self, jupiter=None):
+        NaturalSatellite.__init__(self, planet=jupiter)
+
+        self.type = CelestialBodyType.GANYMEDE
+        self.color = Color.GANYMEDE
+        self.orbit_time = OrbitTime.GANYMEDE
+        self.radius = Radius.GANYMEDE
+        self.orbital_radius = OrbitalRadius.GANYMEDE
+        self.name = BodyName.GANYMEDE
+
+
+class Callisto(NaturalSatellite):
+
+    def __init__(self, jupiter=None):
+        NaturalSatellite.__init__(self, planet=jupiter)
+
+        self.type = CelestialBodyType.CALLISTO
+        self.color = Color.CALLISTO
+        self.orbit_time = OrbitTime.CALLISTO
+        self.radius = Radius.CALLISTO
+        self.orbital_radius = OrbitalRadius.CALLISTO
+        self.name = BodyName.CALLISTO
+
+
 class Mercury(Planet):
 
     def __init__(self, sun=None):
@@ -175,7 +227,7 @@ class Earth(Planet):
         self.orbit_time = OrbitTime.EARTH
         self.radius = Radius.EARTH
         self.orbital_radius = OrbitalRadius.EARTH
-        self.natural_satellites = [Moon(earth=self)]
+        self.natural_satellites = [Moon(self)]
         self.name = BodyName.EARTH
 
 
@@ -189,7 +241,7 @@ class Mars(Planet):
         self.orbit_time = OrbitTime.MARS
         self.radius = Radius.MARS
         self.orbital_radius = OrbitalRadius.MARS
-        self.natural_satellites = [Fobos(mars=self), Deimos(mars=self)]
+        self.natural_satellites = [Fobos(self), Deimos(self)]
         self.name = BodyName.MARS
 
 
@@ -203,6 +255,7 @@ class Jupiter(Planet):
         self.orbit_time = OrbitTime.JUPITER
         self.radius = Radius.JUPITER
         self.orbital_radius = OrbitalRadius.JUPITER
+        self.natural_satellites = [Io(self), Europa(self), Ganymede(self), Callisto(self)]
         self.name = BodyName.JUPITER
 
 
@@ -256,12 +309,12 @@ class Sun(Star):
         self.name = BodyName.SUN
 
         self.planets = [
-            Mercury(sun=self),
-            Venus(sun=self),
-            Earth(sun=self),
-            Mars(sun=self),
-            Jupiter(sun=self),
-            Saturn(sun=self),
-            Uranus(sun=self),
-            Neptune(sun=self)
+            Mercury(self),
+            Venus(self),
+            Earth(self),
+            Mars(self),
+            Jupiter(self),
+            Saturn(self),
+            Uranus(self),
+            Neptune(self)
         ]

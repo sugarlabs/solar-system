@@ -210,6 +210,9 @@ class ToolbarSpeed(Gtk.Toolbar):
             self.stop_play.set_tooltip(_("Stop"))
             self.button.set_icon_name("media-playback-stop")
 
+            if self.speed is None:
+                self.speed = Speed.SLOW
+
             self.emit("speed-changed", self.speed)
 
         else:
@@ -274,7 +277,7 @@ class HelpButton(Gtk.ToolItem):
         help_button.connect('clicked', self.__help_button_clicked_cb)
 
     def __help_button_clicked_cb(self, button):
-        self._palette.popup(immediate=True, state=1)
+        self._palette.popup(immediate=True)
 
     def add_section(self, section_text):
         hbox = Gtk.Box()
