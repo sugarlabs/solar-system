@@ -254,7 +254,7 @@ class HelpButton(Gtk.ToolItem):
         self._palette = help_button.get_palette()
 
         sw = Gtk.ScrolledWindow()
-        sw.set_size_request(int(Gdk.Screen.width() / 2.8), 200)
+        sw.set_size_request(int(Gdk.Screen.width() / 2.8), 310)
         sw.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
 
         self._max_text_width = int(Gdk.Screen.width() / 3) - 600
@@ -370,6 +370,12 @@ class ToolbarBox(SugarToolbarBox):
         self.make_help(help_button)
 
     def make_help(self, button):
+        button.add_section(_("What is the Solar System activity?"))
+        button.add_paragraph(_("The Solar System activity is a tool to encourage children\n") +\
+                             _("to learn more about the planets and their moons (natural satellites).\n") +\
+                             _("It is my hope that this tool serves as a practical and interactve\n") +\
+                             _("way to explore astronomy.\n"))
+
         button.add_section(_("About scales"))
         button.add_paragraph(_("The planets radius are on a scale with each other,\n") +\
                              _("but not with respect to distances (which in turn,\n") +\
