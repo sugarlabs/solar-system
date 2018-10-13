@@ -23,18 +23,18 @@ from constants import Cursor, CelestialBodyType
 
 import gi
 gi.require_version("Gtk", "3.0")
-gi.require_version("WebKit", "3.0")
+gi.require_version("WebKit2", "4.0")
 
 from gi.repository import Gtk
 from gi.repository import Pango
-from gi.repository import WebKit
+from gi.repository import WebKit2
 from gi.repository import GObject
 
 
-class WebView(WebKit.WebView):
+class WebView(WebKit2.WebView):
 
     def __init__(self):
-        WebKit.WebView.__init__(self)
+        WebKit2.WebView.__init__(self)
 
 
 class InfoView(Gtk.VBox):
@@ -53,8 +53,10 @@ class InfoView(Gtk.VBox):
         self.scroll = Gtk.ScrolledWindow()
         self.pack_start(self.scroll, True, True, 0)
 
+
+
         self.view = WebView()
-        self.view.connect("load-finished", self._load_finished_cb)
+        self.view.connect("load-changed", self._load_finished_cb)
         self.scroll.add(self.view)
 
     def _load_finished_cb(self, widget, frame):
@@ -123,7 +125,7 @@ class InfoView(Gtk.VBox):
             pass
 
     def load_file(self, file_path):
-        self.view.open(file_path)
+        self.view.load_uri(file_path)
 
     def back(self):
         if self.view.can_go_back():

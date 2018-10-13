@@ -19,8 +19,10 @@
 # Boston, MA 02111-1307, USA.
 
 import os
-import math
+import gi
+gi.require_version('Gtk', '3.0')
 
+from gi.repository import Gtk
 from constants import Radius
 from constants import OrbitalRadius
 from constants import AU_KM
@@ -28,7 +30,7 @@ from constants import LOCAL_DIR
 from constants import CelestialBodyType
 from constants import BodyName
 
-from gi.repository import Gtk
+
 
 
 def get_sun_scale_radius(width, height, zoom):
