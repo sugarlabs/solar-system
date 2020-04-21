@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2016, Cristian García <cristian99garcia@gmail.com>
@@ -30,8 +29,6 @@ gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gtk
 from gi.repository import Gdk
-from gi.repository import GObject
-
 from sugar3.activity import activity
 
 
@@ -81,19 +78,20 @@ class SolarSystem(activity.Activity):
             if self.info_view.get_parent() == self.box:
                 self.box.remove(self.info_view)
 
-            if self.area.get_parent() == None:
+            if self.area.get_parent() is None:
                 self.box.pack_start(self.area, True, True, 0)
                 self.box.reorder_child(self.area, 0)
 
         elif self.screen == Screen.INFO:
             self.toolbarbox.set_can_go_back(self.info_view.view.can_go_back())
-            self.toolbarbox.set_can_go_forward(self.info_view.view.can_go_forward())
+            self.toolbarbox.set_can_go_forward(
+                self.info_view.view.can_go_forward())
             self.toolbarbox.disable_simulation_widgets()
 
             if self.area.get_parent() == self.box:
                 self.box.remove(self.area)
 
-            if self.info_view.get_parent() == None:
+            if self.info_view.get_parent() is None:
                 self.box.pack_start(self.info_view, True, True, 0)
                 self.box.reorder_child(self.info_view, 0)
 
@@ -127,12 +125,11 @@ class SolarSystem(activity.Activity):
         self.area.set_zoom(zoom)
 
     def _body_selected(self, widget, body):
-        print body, self.screen, Screen.INFO
         self.set_screen(Screen.INFO)
         self.info_view.set_body(body)
 
     def _change_cursor(self, widget, cursor):
-        if self.get_window() == None:
+        if self.get_window() is None:
             return
 
         cursor_type = None
@@ -143,7 +140,7 @@ class SolarSystem(activity.Activity):
         elif cursor == Cursor.LOADING:
             cursor_type = Gdk.CursorType.WATCH
 
-        if cursor_type != None:
+        if cursor_type is not None:
             self.get_window().set_cursor(Gdk.Cursor(cursor_type))
 
     def _can_go_back_cb(self, widget, can):

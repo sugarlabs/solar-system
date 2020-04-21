@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2016, Cristian García <cristian99garcia@gmail.com>
@@ -21,8 +20,10 @@
 import math
 import random
 
-from constants import Color, OrbitTime, Radius, OrbitalRadius, BodyName, CelestialBodyType
-from utils import km_to_pixels, au_to_pixels, get_sun_scale_radius, get_planet_scale_radius
+from constants import \
+    Color, OrbitTime, Radius, OrbitalRadius, BodyName, CelestialBodyType
+from utils import \
+    km_to_pixels, au_to_pixels, get_sun_scale_radius, get_planet_scale_radius
 
 
 class CelestialBody(object):
@@ -80,7 +81,11 @@ class NaturalSatellite(OrbitCelestialBody):
 
     def calculate_position(self, width, height, zoom):
         radius = km_to_pixels(width, height, self.radius, zoom)
-        distance = au_to_pixels(width, height, self.orbital_radius, zoom) + get_planet_scale_radius(width, height, self.around_the, zoom) + radius * 2 + zoom
+        distance = au_to_pixels(
+            width, height, self.orbital_radius, zoom)
+        distance += get_planet_scale_radius(
+            width, height, self.around_the, zoom)
+        distance += radius * 2 + zoom
         self.x = distance * math.sin(self.angle * math.pi / 180.0)
         self.y = distance * math.cos(self.angle * math.pi / 180.0)
 
@@ -95,7 +100,10 @@ class Planet(OrbitCelestialBody):
 
     def calculate_position(self, width, height, zoom):
         radius = km_to_pixels(width, height, self.radius, zoom)
-        distance = au_to_pixels(width, height, self.orbital_radius, zoom) + get_sun_scale_radius(width, height, zoom) + radius
+        distance = au_to_pixels(
+            width, height, self.orbital_radius, zoom)
+        distance += get_sun_scale_radius(
+            width, height, zoom) + radius
         self.x = distance * math.sin(self.angle * math.pi / 180.0)
         self.y = distance * math.cos(self.angle * math.pi / 180.0)
 
@@ -255,7 +263,8 @@ class Jupiter(Planet):
         self.orbit_time = OrbitTime.JUPITER
         self.radius = Radius.JUPITER
         self.orbital_radius = OrbitalRadius.JUPITER
-        self.natural_satellites = [Io(self), Europa(self), Ganymede(self), Callisto(self)]
+        self.natural_satellites = [
+            Io(self), Europa(self), Ganymede(self), Callisto(self)]
         self.name = BodyName.JUPITER
 
 
