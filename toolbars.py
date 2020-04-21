@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2016, Cristian García <cristian99garcia@gmail.com>
@@ -20,22 +19,21 @@
 
 from gettext import gettext as _
 
-from utils import make_separator
-from utils import get_icon_name
-from utils import get_body_name
-from constants import Screen
-from constants import BodyName
-from constants import CelestialBodyType
-from constants import Speed
-
 import gi
+
+from constants import CelestialBodyType
+from constants import Screen
+from constants import Speed
+from utils import get_body_name
+from utils import get_icon_name
+from utils import make_separator
+
 gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GObject
 
-from sugar3.graphics import style
 from sugar3.graphics.icon import Icon
 from sugar3.graphics.toolbutton import ToolButton
 from sugar3.graphics.toolbarbox import ToolbarButton
@@ -60,12 +58,14 @@ class ToolbarInfo(Gtk.Toolbar):
 
         self.button = ToolbarButton(page=self, icon_name="info")
 
-        self.button_simulation = RadioToolButton(icon_name="solar-system", group=None)
+        self.button_simulation = RadioToolButton(
+            icon_name="solar-system", group=None)
         self.button_simulation.set_tooltip(_("Show solar system"))
         self.button_simulation.connect("toggled", self._show_simulation_cb)
         self.insert(self.button_simulation, -1)
 
-        self.button_info = RadioToolButton(icon_name="info", group=self.button_simulation)
+        self.button_info = RadioToolButton(
+            icon_name="info", group=self.button_simulation)
         self.button_info.set_tooltip(_("Show information"))
         self.button_info.connect("toggled", self._show_info_cb)
         self.insert(self.button_info, -1)
@@ -183,17 +183,21 @@ class ToolbarSpeed(Gtk.Toolbar):
         self.stop_play.connect("clicked", self._stop_play)
         self.insert(self.stop_play, -1)
 
-        self.slow_button = RadioToolButton(group=None, icon_name="slow-walk-milton-raposo")
+        self.slow_button = RadioToolButton(
+            group=None, icon_name="slow-walk-milton-raposo")
         self.slow_button.set_tooltip(_("Run slow"))
         self.slow_button.connect("clicked", self._speed_changed_cb, Speed.SLOW)
         self.insert(self.slow_button, -1)
 
-        self.normal_button = RadioToolButton(group=self.slow_button, icon_name="walking")
+        self.normal_button = RadioToolButton(
+            group=self.slow_button, icon_name="walking")
         self.normal_button.set_tooltip(_("Run Normal"))
-        self.normal_button.connect("clicked", self._speed_changed_cb, Speed.NORMAL)
+        self.normal_button.connect(
+            "clicked", self._speed_changed_cb, Speed.NORMAL)
         self.insert(self.normal_button, -1)
 
-        self.fast_button = RadioToolButton(group=self.slow_button, icon_name="running")
+        self.fast_button = RadioToolButton(
+            group=self.slow_button, icon_name="running")
         self.fast_button.set_tooltip(_("Run fast"))
         self.fast_button.connect("clicked", self._speed_changed_cb, Speed.FAST)
         self.insert(self.fast_button, -1)
@@ -374,21 +378,24 @@ class ToolbarBox(SugarToolbarBox):
 
     def make_help(self, button):
         button.add_section(_("What is the Solar System activity?"))
-        button.add_paragraph(_("The Solar System activity is a tool to encourage children\n") +\
-                             _("to learn more about the planets and their moons (natural satellites).\n") +\
-                             _("It is my hope that this tool serves as a practical and interactve\n") +\
-                             _("way to explore astronomy.\n"))
+        button.add_paragraph(
+            _("The Solar System activity is a tool to encourage children\n") +
+            _("to learn more about the planets and their moons (natural satellites).\n") +
+            _("It is my hope that this tool serves as a practical and interactve\n") +
+            _("way to explore astronomy.\n")) # flake8: noqa
 
         button.add_section(_("About scales"))
-        button.add_paragraph(_("The planets radius are on a scale with each other,\n") +\
-                             _("but not with respect to distances (which in turn,\n") +\
-                             _("are on scale with each other), and the Sun radius\n") +\
-                             _("does not respect either of the two scales.\n"))
+        button.add_paragraph(
+            _("The planets radius are on a scale with each other,\n") +
+            _("but not with respect to distances (which in turn,\n") +
+            _("are on scale with each other), and the Sun radius\n") +
+            _("does not respect either of the two scales.\n"))
 
         button.add_section(_("Why did I make that decision?"))
-        button.add_paragraph(_("Just because if I kept all the distances to the\n") +\
-                             _("same scale, you could not see anything (due to the\n") +\
-                             _("immense size of the space)."))
+        button.add_paragraph(
+            _("Just because if I kept all the distances to the\n") +
+            _("same scale, you could not see anything (due to the\n") +
+            _("immense size of the space)."))
 
     def set_can_back_back(self, can):
         self.toolbar_info.button_back.set_sensitive(can)
@@ -454,9 +461,6 @@ class ToolbarBox(SugarToolbarBox):
 
     def select_screen(self, screen):
         self.toolbar_info.select_screen(screen)
-
-    def set_can_go_forward(self, can):
-        self.toolbar_info.forward_button.set_sensitive(can)
 
     def set_can_go_back(self, can):
         self.toolbar_info.back_button.set_sensitive(can)

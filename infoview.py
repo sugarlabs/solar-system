@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2016, Cristian García <cristian99garcia@gmail.com>
@@ -18,27 +17,26 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from utils import get_data_file
-from constants import Cursor, CelestialBodyType
-
 import gi
+
+from constants import CelestialBodyType
+from utils import get_data_file
+
 gi.require_version("Gtk", "3.0")
-gi.require_version("WebKit", "3.0")
+gi.require_version("WebKit2", "4.0")
 
 from gi.repository import Gtk
-from gi.repository import Pango
-from gi.repository import WebKit
+from gi.repository import WebKit2
 from gi.repository import GObject
 
 
-class WebView(WebKit.WebView):
+class WebView(WebKit2.WebView):
 
     def __init__(self):
-        WebKit.WebView.__init__(self)
+        WebKit2.WebView.__init__(self)
 
 
 class InfoView(Gtk.VBox):
-
     __gsignals__ = {
         "change-cursor": (GObject.SIGNAL_RUN_FIRST, None, [int]),
         "can-go-back": (GObject.SIGNAL_RUN_FIRST, None, [bool]),
@@ -54,7 +52,7 @@ class InfoView(Gtk.VBox):
         self.pack_start(self.scroll, True, True, 0)
 
         self.view = WebView()
-        self.view.connect("load-finished", self._load_finished_cb)
+        self.view.connect("load-changed", self._load_finished_cb)
         self.scroll.add(self.view)
 
     def _load_finished_cb(self, widget, frame):
@@ -63,35 +61,35 @@ class InfoView(Gtk.VBox):
 
     def set_body(self, body):
         self.body = body
-        #self.emit("change-cursor", Cursor.LOADING)
+        # self.emit("change-cursor", Cursor.LOADING)
         self.load_info(body)
-        #self.emit("change-cursor", Cursor.ARROW)
+        # self.emit("change-cursor", Cursor.ARROW)
 
         self.show_all()
 
     def load_info(self, body):
         if body == CelestialBodyType.CELESTIAL_BODY:
-            #self.load_file()
+            # self.load_file()
             pass
 
         elif body == CelestialBodyType.STAR:
-            #self.load_file()
+            # self.load_file()
             pass
 
         elif body == CelestialBodyType.PLANET:
-            #self.load_file()
+            # self.load_file()
             pass
 
         elif body == CelestialBodyType.DWARF_PLANET:
-            #self.load_file()
+            # self.load_file()
             pass
 
         elif body == CelestialBodyType.NATURAL_SATELLITE:
-            #self.load_file()
+            # self.load_file()
             pass
 
         elif body == CelestialBodyType.SUN:
-            #self.load_file()
+            # self.load_file()
             pass
 
         elif body == CelestialBodyType.MERCURY:
@@ -119,11 +117,11 @@ class InfoView(Gtk.VBox):
             self.load_file(get_data_file("neptune"))
 
         elif body == CelestialBodyType.MOON:
-            #self.load_file()
+            # self.load_file()
             pass
 
     def load_file(self, file_path):
-        self.view.open(file_path)
+        self.view.load_uri(file_path)
 
     def back(self):
         if self.view.can_go_back():

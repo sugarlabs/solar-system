@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2016, Cristian García <cristian99garcia@gmail.com>
@@ -72,8 +71,6 @@ class Area(Gtk.DrawingArea):
         self.connect("button-release-event", self.__release_cb)
         self.connect("motion-notify-event", self.__motion_cb)
 
-        self.redraw()
-
     def _orbit(self):
         for idx in range(0, len(self.sun.planets)):
             planet = self.sun.planets[idx]
@@ -82,13 +79,12 @@ class Area(Gtk.DrawingArea):
 
             for satellite in planet.natural_satellites:
                 satellite.advance(self.speed)
-                satellite.calculate_position(self.width, self.height, self.zoom)
+                satellite.calculate_position(
+                    self.width, self.height, self.zoom)
+
+        self.queue_draw()
 
         return True
-
-    def redraw(self):
-        GObject.idle_add(self.queue_draw)
-        GObject.idle_add(self.redraw)
 
     def __draw_cb(self, widget, context):
         self._calculate()
@@ -140,7 +136,8 @@ class Area(Gtk.DrawingArea):
             if not planet.visible:
                 continue
 
-            radius = get_planet_scale_radius(self.width, self.height, planet, self.zoom)
+            radius = get_planet_scale_radius(
+                self.width, self.height, planet, self.zoom)
             if self.big_planets:
                 radius = min(10 * radius, 35)
 
@@ -151,19 +148,25 @@ class Area(Gtk.DrawingArea):
             context.fill()
 
             if self.show_orbits:
-                radius = au_to_pixels(self.width, self.height, planet.orbital_radius, self.zoom) + get_sun_scale_radius(self.width, self.height, self.zoom)
+                radius = au_to_pixels(
+                    self.width, self.height, planet.orbital_radius, self.zoom)
+                radius += get_sun_scale_radius(
+                    self.width, self.height, self.zoom)
                 context.set_source_rgb(*planet.color)
-                context.arc(self.x + self.width / 2, self.y + self.height / 2, radius, 0, 2 * math.pi)
+                context.arc(self.x + self.width / 2, self.y +
+                            self.height / 2, radius, 0, 2 * math.pi)
                 context.stroke()
 
             for satellite in planet.natural_satellites:
                 if not satellite.visible:
                     continue
 
-                radius = get_planet_scale_radius(self.width, self.height, satellite, self.zoom)
+                radius = get_planet_scale_radius(
+                    self.width, self.height, satellite, self.zoom)
                 if radius >= 1:
                     context.set_source_rgb(*satellite.color)
-                    context.arc(x + satellite.x, y + satellite.y, radius, 0, 2 * math.pi)
+                    context.arc(x + satellite.x, y + satellite.y,
+                                radius, 0, 2 * math.pi)
                     context.fill()
 
         for body in self.get_all_bodies():
@@ -184,7 +187,8 @@ class Area(Gtk.DrawingArea):
 
         radius = get_sun_scale_radius(self.width, self.height, self.zoom)
         context.set_source_rgb(*self.sun.color)
-        context.arc(self.x + self.width / 2, self.y + self.height / 2, radius, 0, 2 * math.pi)
+        context.arc(self.x + self.width / 2, self.y +
+                    self.height / 2, radius, 0, 2 * math.pi)
         context.fill()
 
     def get_all_bodies(self):
@@ -203,14 +207,16 @@ class Area(Gtk.DrawingArea):
             return get_sun_scale_radius(self.width, self.height, self.zoom)
 
         else:
-            return get_planet_scale_radius(self.width, self.height, body, self.zoom)
+            return get_planet_scale_radius(
+                self.width, self.height, body, self.zoom)
 
     def check_preselected_bodies(self, event):
         for body in self.get_all_bodies():
             radius = self.get_body_radius(body)
             x = self.x + body.x + self.width / 2.0
             y = self.y + body.y + self.height / 2.0
-            body.preselected = event.x > x - radius and event.x < x + radius and event.y > y - radius and event.y < y + radius
+            body.preselected = event.x > x - radius and event.x < x + \
+                radius and event.y > y - radius and event.y < y + radius
 
     def set_show_orbits(self, orbits):
         self.show_orbits = orbits

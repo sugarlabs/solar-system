@@ -3,4 +3,6 @@ name = Solar System
 activity_version = 1
 bundle_id = org.sugarlabs.SolarSystem
 icon = icon
-exec = sugar-activity activity.SolarSystem 
+exec = sugar-activity3 activity.SolarSystem
+license = LGPLv3+
+max_participants = 1

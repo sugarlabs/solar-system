@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2016, Cristian García <cristian99garcia@gmail.com>
@@ -24,6 +23,7 @@ from area import Area
 from infoview import InfoView
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gtk
@@ -32,7 +32,6 @@ from gi.repository import GObject
 
 
 class SolarSystem(Gtk.VBox):
-
     __gsignals__ = {
         "view-changed": (GObject.SIGNAL_RUN_FIRST, None, [int])
     }
@@ -70,7 +69,7 @@ class SolarSystem(Gtk.VBox):
         self.info_view.set_body(body)
 
     def _change_cursor(self, widget, cursor):
-        if self.get_window() == None:
+        if self.get_window() is None:
             return
 
         cursor_type = None
@@ -81,7 +80,7 @@ class SolarSystem(Gtk.VBox):
         elif cursor == Cursor.LOADING:
             cursor_type = Gdk.CursorType.WATCH
 
-        if cursor_type != None:
+        if cursor_type is not None:
             self.get_window().set_cursor(Gdk.Cursor(cursor_type))
 
     def change_zoom(self, widget):
@@ -100,7 +99,7 @@ class SolarSystem(Gtk.VBox):
             if self.info_view.get_parent() == self:
                 self.remove(self.info_view)
 
-            if self.area.get_parent() == None:
+            if self.area.get_parent() is None:
                 self.pack_start(self.area, True, True, 0)
                 self.reorder_child(self.area, 0)
 
@@ -108,7 +107,7 @@ class SolarSystem(Gtk.VBox):
             if self.area.get_parent() == self:
                 self.remove(self.area)
 
-            if self.info_view.get_parent() == None:
+            if self.info_view.get_parent() is None:
                 self.pack_start(self.info_view, True, True, 0)
                 self.reorder_child(self.info_view, 0)
 
@@ -117,7 +116,7 @@ if __name__ == "__main__":
     win = Gtk.Window()
     win.set_title("Solar System")
     win.set_default_size(560, 480)
-    #win.maximize()
+    # win.maximize()
     win.connect("destroy", Gtk.main_quit)
 
     solar_system = SolarSystem()

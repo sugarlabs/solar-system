@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2016, Cristian García <cristian99garcia@gmail.com>
@@ -18,26 +17,30 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import os
-import math
+from gettext import gettext as _
 
-from constants import Radius
-from constants import OrbitalRadius
-from constants import AU_KM
-from constants import LOCAL_DIR
-from constants import CelestialBodyType
-from constants import BodyName
+
+import os
+import gi
+gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gtk
 
+from constants import AU_KM
+from constants import BodyName
+from constants import CelestialBodyType
+from constants import LOCAL_DIR
+from constants import OrbitalRadius
+from constants import Radius
+
 
 def get_sun_scale_radius(width, height, zoom):
-    #return Radius.SUN / 30000.0 * ((zoom) / (zoom + .15))
+    # return Radius.SUN / 30000.0 * ((zoom) / (zoom + .15))
     return km_to_pixels(width, height, Radius.SUN, zoom) * 100
 
 
 def get_planet_scale_radius(width, height, planet, zoom):
-    #return planet.radius / 5000.0 * zoom
+    # return planet.radius / 5000.0 * zoom
     return km_to_pixels(width, height, planet.radius, zoom) * 1000
 
 
