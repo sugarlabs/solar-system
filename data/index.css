@@ -1,0 +1,62 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+/* Set the background of the entire body of the page */
+body {
+    background: url('images/index_background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+  
+h1 {
+    color: #fff4df;
+    text-shadow:
+     -1.5px -1.5px 0 #333,  
+      1.5px -1.5px 0 #333,
+     -1.5px 1.5px 0 #333,
+      1.5px 1.5px 0 #333;
+}
+  
+/* Style the main div and header */
+.main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+  
+/* Style the list items */
+.list-group-item {
+    list-style-type: none;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    color: #333;
+    background-color: #fff4df;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+  
+/* Style for hover effect */
+  .list-group-item:hover {
+    background-color: #333;
+    color: #fff4df;
+}
+  
+/* Remove bullets from list items */
+  .list-group {
+    list-style-type: none;
+}
