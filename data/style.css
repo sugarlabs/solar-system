@@ -1,39 +1,72 @@
-h1 {
-  text-align: center;
+@font-face {
+  font-family: 'Roboto';
+  src: url('fonts/Roboto-Regular.ttf') format('truetype');
 }
 
-h3 {
-  margin-top: 40px;
-  margin-bottom: 0px;
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5em;
+  padding-top: 20px;
+  color: #383838;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #383838;
+}
+
+p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #383838;
 }
 
 .main {
-  margin: 10px;
-}
-
-.float-table {
-  float: right;
-  width: 250px;
-  margin-right: 0px;
-  border-width: 5px;
-  border-color: rgb(0, 0, 0);
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 10px;
 }
 
 .credits {
   margin-top: 50px;
   text-align: center;
+  font-size: 0.9em;
 }
 
-.menu {
-  margin-top: 50px;
+ul {
+  padding-left: 20px;
+}
+
+ul li {
+  line-height: 1.6;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
   text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #383838;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
 }
 
-.menu > p {
-  line-height: 50%;
-  font-size: 24px;
-}
+.button:hover {background-color: #3e8e41}
 
-.list-group-item {
-  text-align: center;
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
