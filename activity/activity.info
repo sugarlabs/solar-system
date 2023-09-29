@@ -1,6 +1,6 @@
 [Activity]
 name = Solar System
-activity_version = 1
+activity_version = 2
 bundle_id = org.sugarlabs.SolarSystem
 icon = icon
 exec = sugar-activity3 activity.SolarSystem
