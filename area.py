@@ -90,6 +90,7 @@ class Area(Gtk.DrawingArea):
         self._calculate()
         self._draw_background(context)
         self._draw_celestial_bodies(context)
+        self._draw_preselected_body_highlight(context)
 
     def __press_cb(self, widget, event):
         self.draw_x = event.x
@@ -153,8 +154,11 @@ class Area(Gtk.DrawingArea):
                 radius += get_sun_scale_radius(
                     self.width, self.height, self.zoom)
                 context.set_source_rgb(*planet.color)
-                context.arc(self.x + self.width / 2, self.y +
-                            self.height / 2, radius, 0, 2 * math.pi)
+                context.arc(self.x + self.width / 2,
+                            self.y + self.height / 2,
+                            radius,
+                            0,
+                            2 * math.pi)
                 context.stroke()
 
             for satellite in planet.natural_satellites:
@@ -169,6 +173,36 @@ class Area(Gtk.DrawingArea):
                                 radius, 0, 2 * math.pi)
                     context.fill()
 
+        for planet in self.sun.planets:
+            if not planet.visible:
+                continue
+
+            radius = get_planet_scale_radius(
+                self.width, self.height, planet, self.zoom)
+            x = self.x + planet.x + self.width / 2.0
+            y = self.y + planet.y + self.height / 2.0
+            text = planet.name
+            context.set_source_rgb(1.0, 1.0, 1.0)
+            context.move_to(x + radius + 5, y)
+            context.show_text(text)
+
+        sun_radius = get_sun_scale_radius(self.width, self.height, self.zoom)
+        context.set_source_rgb(*self.sun.color)
+        context.arc(
+            self.x + self.width / 2,
+            self.y + self.height / 2,
+            sun_radius,
+            0,
+            2 * math.pi
+        )
+        context.fill()
+        context.set_source_rgb(1.0, 1.0, 1.0)
+        context.move_to(
+            self.x + self.width / 2 + sun_radius + 5,
+            self.y + self.height / 2
+        )
+        context.show_text("Sun")
+
         for body in self.get_all_bodies():
             if not body.preselected or not body.visible:
                 continue
@@ -179,17 +213,29 @@ class Area(Gtk.DrawingArea):
             if self.big_planets:
                 radius = min(10 * radius, 35)
 
-            context.set_source_rgb(*Color.SELECTED)
-            context.arc(x, y, self.get_body_radius(body), 0, 2 * math.pi)
-            context.stroke()
-
             break
 
         radius = get_sun_scale_radius(self.width, self.height, self.zoom)
         context.set_source_rgb(*self.sun.color)
-        context.arc(self.x + self.width / 2, self.y +
-                    self.height / 2, radius, 0, 2 * math.pi)
+        context.arc(
+            self.x + self.width / 2,
+            self.y + self.height / 2,
+            radius,
+            0,
+            2 * math.pi
+        )
         context.fill()
+
+    def _draw_preselected_body_highlight(self, context):
+        for body in self.get_all_bodies():
+            if body.preselected and body.visible:
+                x = self.x + body.x + self.width / 2.0
+                y = self.y + body.y + self.height / 2.0
+                radius = self.get_body_radius(body)
+
+                context.set_source_rgb(*Color.SELECTED)
+                context.arc(x, y, radius, 0, 2 * math.pi)
+                context.stroke()
 
     def get_all_bodies(self):
         bodies = [self.sun]
