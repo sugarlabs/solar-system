@@ -59,26 +59,27 @@ class CelestialBodyType:
 
 
 class Color:
-    BACKGROUND = (0, 0, 0)
-    SELECTED = (51, 255, 51)  # Green
+    BACKGROUND = (0.0, 0.0, 0.0)
+    SELECTED = (0.2, 1.0, 0.2)  # Bright Green
 
     # Celestial Bodies
-    SUN = (255, 255, 102)  # Yellow
-    MERCURY = (204, 133, 76)  # Light Brown
-    VENUS = (230, 77, 26)  # Orange
-    EARTH = (102, 153, 204)  # Light Blue
-    MARS = (230, 77, 77)  # Reddish
-    JUPITER = (230, 153, 51)  # Yellowish
-    SATURN = (204, 178, 153)  # Pale Yellow
-    URANUS = (153, 204, 230)  # Light Cyan
-    NEPTUNE = (51, 102, 204)  # Deep Blue
-    MOON = (230, 230, 230)  # White
-    FOBOS = (128, 128, 128)  # Gray
-    DEIMOS = (153, 153, 153)  # Light Gray
-    IO = (255, 204, 128)  # Peach
-    EUROPA = (204, 153, 102)  # Light Brown
-    GANYMEDE = (179, 153, 128)  # Grayish
-    CALLISTO = (102, 77, 51)  # Dark Brown
+    SUN = (1.0, 1.0, 0.7)  # Yellowish
+    MERCURY = (0.82, 0.64, 0.41)  # Light Brown
+    VENUS = (0.95, 0.47, 0.21)  # Orange
+    EARTH = (0.46, 0.54, 0.74)  # Light Blue
+    MARS = (0.75, 0.36, 0.31)  # Reddish
+    JUPITER = (0.87, 0.55, 0.24)  # Yellowish
+    SATURN = (0.81, 0.72, 0.61)  # Pale Yellow
+    URANUS = (0.65, 0.77, 0.82)  # Light Cyan
+    NEPTUNE = (0.39, 0.54, 0.95)  # Deep Blue
+    MOON = (0.8, 0.8, 0.8)  # Light Gray
+    FOBOS = (0.5, 0.5, 0.5)  # Gray
+    DEIMOS = (0.65, 0.65, 0.65)  # Light Gray
+    IO = (0.95, 0.84, 0.52)  # Peach
+    EUROPA = (0.72, 0.58, 0.4)  # Light Brown
+    GANYMEDE = (0.57, 0.51, 0.44)  # Grayish
+    CALLISTO = (0.45, 0.37, 0.27)  # Dark Brown
+
 
 
 class OrbitTime:  # Days
