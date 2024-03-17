@@ -18,22 +18,14 @@
 # Boston, MA 02111-1307, USA.
 
 import math
-
-from constants import Color
-from constants import BodyName
-from constants import Speed
-from utils import get_sun_scale_radius
-from utils import get_planet_scale_radius
-from utils import au_to_pixels
-from celestial_bodies import Sun
-
+import cairo
 import gi
 gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk, Gdk, GObject, Pango
 
-from gi.repository import Gtk
-from gi.repository import Gdk
-from gi.repository import GObject
-
+from constants import Color, BodyName, Speed
+from utils import get_sun_scale_radius, get_planet_scale_radius, au_to_pixels
+from celestial_bodies import Sun
 
 class Area(Gtk.DrawingArea):
 
@@ -95,7 +87,6 @@ class Area(Gtk.DrawingArea):
         self.draw_x = event.x
         self.draw_y = event.y
         self.select_body = True
-        self.check_preselected_bodies(event)
 
     def __release_cb(self, widget, event):
         self.draw_x = None
@@ -184,13 +175,12 @@ class Area(Gtk.DrawingArea):
             context.arc(x, y, self.get_body_radius(body), 0, 2 * math.pi)
             context.stroke()
 
-            break
-
-        radius = get_sun_scale_radius(self.width, self.height, self.zoom)
-        context.set_source_rgb(*self.sun.color)
-        context.arc(self.x + self.width / 2, self.y +
-                    self.height / 2, radius, 0, 2 * math.pi)
-        context.fill()
+            # Draw text label
+            layout = context.create_layout()
+            layout.set_text(body.name.value)  # Assuming body.name is an Enum
+            layout.set_font_description(Pango.FontDescription("Sans 10"))
+            context.move_to(x, y)
+            context.show_layout(layout)
 
     def get_all_bodies(self):
         bodies = [self.sun]
