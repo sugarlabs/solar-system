@@ -19,20 +19,14 @@
 
 import math
 
-from constants import Color
-from constants import BodyName
-from constants import Speed
-from utils import get_sun_scale_radius
-from utils import get_planet_scale_radius
-from utils import au_to_pixels
+from constants import Color, BodyName, Speed
+from utils import get_sun_scale_radius, get_planet_scale_radius, au_to_pixels
 from celestial_bodies import Sun
 
 import gi
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Gtk
-from gi.repository import Gdk
-from gi.repository import GObject
+from gi.repository import Gtk, Gdk, GObject
 
 
 class Area(Gtk.DrawingArea):
@@ -126,7 +120,7 @@ class Area(Gtk.DrawingArea):
         self.height = allocation.height
 
     def _draw_background(self, context):
-        # TODO: Draw Milky Way
+        # Draw a black background
         context.set_source_rgb(*Color.BACKGROUND)
         context.rectangle(0, 0, self.width, self.height)
         context.fill()
@@ -136,6 +130,7 @@ class Area(Gtk.DrawingArea):
             if not planet.visible:
                 continue
 
+            # Draw the planet
             radius = get_planet_scale_radius(
                 self.width, self.height, planet, self.zoom)
             if self.big_planets:
@@ -147,48 +142,41 @@ class Area(Gtk.DrawingArea):
             context.arc(x, y, radius, 0, 2 * math.pi)
             context.fill()
 
+            # Draw orbits if enabled
             if self.show_orbits:
-                radius = au_to_pixels(
+                orbit_radius = au_to_pixels(
                     self.width, self.height, planet.orbital_radius, self.zoom)
-                radius += get_sun_scale_radius(
+                orbit_radius += get_sun_scale_radius(
                     self.width, self.height, self.zoom)
                 context.set_source_rgb(*planet.color)
                 context.arc(self.x + self.width / 2, self.y +
-                            self.height / 2, radius, 0, 2 * math.pi)
+                            self.height / 2, orbit_radius, 0, 2 * math.pi)
                 context.stroke()
 
+            # Draw natural satellites
             for satellite in planet.natural_satellites:
                 if not satellite.visible:
                     continue
 
-                radius = get_planet_scale_radius(
+                satellite_radius = get_planet_scale_radius(
                     self.width, self.height, satellite, self.zoom)
-                if radius >= 1:
+                if satellite_radius >= 1:
                     context.set_source_rgb(*satellite.color)
                     context.arc(x + satellite.x, y + satellite.y,
-                                radius, 0, 2 * math.pi)
+                                satellite_radius, 0, 2 * math.pi)
                     context.fill()
 
-        for body in self.get_all_bodies():
-            if not body.preselected or not body.visible:
-                continue
+            # Draw text label for the planet
+            text = planet.name
+            context.set_source_rgb(1.0, 1.0, 1.0)  # White color for text
+            context.move_to(x + radius + 5, y)
+            context.show_text(text)
 
-            x = self.x + body.x + self.width / 2.0
-            y = self.y + body.y + self.height / 2.0
-
-            if self.big_planets:
-                radius = min(10 * radius, 35)
-
-            context.set_source_rgb(*Color.SELECTED)
-            context.arc(x, y, self.get_body_radius(body), 0, 2 * math.pi)
-            context.stroke()
-
-            break
-
-        radius = get_sun_scale_radius(self.width, self.height, self.zoom)
+        # Draw the Sun
+        sun_radius = get_sun_scale_radius(self.width, self.height, self.zoom)
         context.set_source_rgb(*self.sun.color)
         context.arc(self.x + self.width / 2, self.y +
-                    self.height / 2, radius, 0, 2 * math.pi)
+                    self.height / 2, sun_radius, 0, 2 * math.pi)
         context.fill()
 
     def get_all_bodies(self):
@@ -201,14 +189,6 @@ class Area(Gtk.DrawingArea):
                 bodies.append(satellite)
 
         return bodies
-
-    def get_body_radius(self, body):
-        if body.name == BodyName.SUN:
-            return get_sun_scale_radius(self.width, self.height, self.zoom)
-
-        else:
-            return get_planet_scale_radius(
-                self.width, self.height, body, self.zoom)
 
     def check_preselected_bodies(self, event):
         for body in self.get_all_bodies():
