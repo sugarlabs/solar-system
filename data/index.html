@@ -1,29 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Solar System</title>
-  <link rel="stylesheet" href="index.css">
+ <meta charset="UTF-8">
+ <title>Solar System Explorer</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="stylesheet" href="index.css">
 </head>
 
+
 <body>
-  <header>
-    <h1>Solar System</h1>
-  </header>
-  
-  <div class="main">
-    <div class="menu">
-      <ul class="list-group">
-        <li><a href="mercury.html" class="list-group-item">Mercury</a></li>
-        <li><a href="venus.html" class="list-group-item">Venus</a></li>
-        <li><a href="earth.html" class="list-group-item">Earth</a></li>
-        <li><a href="mars.html" class="list-group-item">Mars</a></li>
-        <li><a href="jupiter.html" class="list-group-item">Jupiter</a></li>
-        <li><a href="saturn.html" class="list-group-item">Saturn</a></li>
-        <li><a href="uranus.html" class="list-group-item">Uranus</a></li>
-        <li><a href="neptune.html" class="list-group-item">Neptune</a></li>
-      </ul>
-    </div>
-  </div>
+ <header>
+   <nav class="navbar">
+     <div class="logo">
+       <i class="fas fa-sun"></i> Solar System
+     </div>
+     <ul class="nav-links">
+       <li><a href="#about">About</a></li>
+       <li><a href="#planets">Planets</a></li>
+       <li><a href="#facts">Fact</a></li>
+     </ul>
+     <div class="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
+       <i class="fas fa-bars"></i>
+     </div>
+   </nav>
+ </header>
+
+
+ <main>
+   <section class="hero">
+     <div class="hero-overlay">
+       <h1>Explore the Solar System</h1>
+       <p>Discover the wonders of our celestial neighborhood without the need for images.</p>
+       <a href="#planets" class="btn">Get Started</a>
+     </div>
+   </section>
+
+
+   <section id="about" class="about-section">
+     <h2>About the Solar System</h2>
+     <p>
+       The Solar System comprises the Sun and all celestial bodies bound to it by gravity, including eight planets, their moons, dwarf planets, and countless small objects like asteroids and comets.
+     </p>
+   </section>
+
+
+   <section id="planets" class="planets-list">
+     <h2>Planets</h2>
+     <ul>
+       <li><a href="mercury.html">Mercury</a></li>
+       <li><a href="venus.html">Venus</a></li>
+       <li><a href="earth.html">Earth</a></li>
+       <li><a href="mars.html">Mars</a></li>
+       <li><a href="jupiter.html">Jupiter</a></li>
+       <li><a href="saturn.html">Saturn</a></li>
+       <li><a href="uranus.html">Uranus</a></li>
+       <li><a href="neptune.html">Neptune</a></li>
+     </ul>
+   </section>
+
+
+   <section id="facts" class="facts-section">
+     <h2>Solar System Fact</h2>
+     <div id="fact-container">
+       <!-- to display random facts -->
+     </div>
+   </section>
+ </main>
+
+
+ <footer>
+   <p>&copy; 2024 Solar System Explorer. All rights reserved.</p>
+ </footer>
+
+ <script>
+   // Mobile navigation
+   const hamburger = document.querySelector('.hamburger');
+   const navLinks = document.querySelector('.nav-links');
+
+
+   hamburger.addEventListener('click', () => {
+     navLinks.classList.toggle('active');
+     hamburger.classList.toggle('active');
+   });
+
+
+   // for accessibility
+   hamburger.addEventListener('keypress', (e) => {
+     if (e.key === 'Enter') {
+       navLinks.classList.toggle('active');
+       hamburger.classList.toggle('active');
+     }
+   });
+
+
+   // solar system facts
+   const facts = [
+     "Mercury is the closest planet to the Sun and has the shortest orbital period of all the planets.",
+     "Venus rotates in the opposite direction to most planets, meaning the Sun rises in the west and sets in the east.",
+     "Earth is the only planet known to support life, with a perfect balance of water and atmosphere.",
+     "Mars has the largest volcano in the Solar System, Olympus Mons, which is about three times the height of Mount Everest.",
+     "Jupiter is so large that all the other planets in the Solar System could fit inside it.",
+     "Saturn's rings are made up of ice and rock particles ranging in size from tiny grains to large chunks.",
+     "Uranus rotates on its side, making its seasons extreme and lasting over 20 years each.",
+     "Neptune has the strongest winds in the Solar System, reaching speeds of up to 2,100 kilometers per hour.",
+     "Pluto, once considered the ninth planet, is now classified as a dwarf planet.",
+     "The asteroid belt between Mars and Jupiter contains millions of rocky bodies orbiting the Sun.",
+     "The Kuiper Belt extends beyond Neptune and is home to many dwarf planets and comets.",
+     "A day on Venus is longer than its year, taking about 243 Earth days to rotate once.",
+     "Earth's moon is the fifth largest moon in the Solar System and the largest relative to its planet.",
+     "The Sun contains 99.86% of the total mass of the Solar System.",
+     "Comets are often referred to as 'dirty snowballs' because they are made of ice, dust, and rocky material."
+   ];
+
+
+   const factContainer = document.getElementById('fact-container');
+
+
+   // Function to display a random fact
+   function displayRandomFact() {
+     const randomIndex = Math.floor(Math.random() * facts.length);
+     const fact = facts[randomIndex];
+
+     const p = document.createElement('p');
+     p.textContent = fact;
+
+     p.classList.add('fact-text');
+
+
+     //To Clear any existing fact and append the new one
+     factContainer.innerHTML = '';
+     factContainer.appendChild(p);
+   }
+
+
+   // Initialize fact on page load
+   window.addEventListener('DOMContentLoaded', displayRandomFact);
+ </script>
 </body>
 </html>
+
+
+

@@ -1,56 +1,293 @@
-/* Set the background of the entire body of the page */
-body {
-    background: url('images/index_background.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+* {
     margin: 0;
-}
+    padding: 0;
+    box-sizing: border-box;
+  }
   
-h1 {
-    color: #fff4df;
-    text-shadow:
-     -1.5px -1.5px 0 #333,  
-      1.5px -1.5px 0 #333,
-     -1.5px 1.5px 0 #333,
-      1.5px 1.5px 0 #333;
-}
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: url('images/index.webp') no-repeat center center fixed;
+    background-size: cover;
+    color: #ffffff;
+    line-height: 1.6;
+  }
   
-/* Style the main div and header */
-.main {
-    text-align: center;
+  /* Navbar Styles */
+  .navbar {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    color: #ffcc00;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo i {
+    margin-right: 10px;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+  }
+  
+  .nav-links li {
+    margin-left: 20px;
+  }
+  
+  .nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #ffcc00;
+  }
+  
+  /* Hamburger Menu Styles */
+  .hamburger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ffffff;
+  }
+  
+  .hamburger.active i {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Hero Section */
+  .hero {
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay to darken the background image */
+    display: flex;
     justify-content: center;
     align-items: center;
-}
+    text-align: center;
+    padding: 0 20px;
+    margin-top: 60px; /* To offset fixed navbar */
+  }
   
-/* Style the list items */
-.list-group-item {
-    list-style-type: none;
-    display: inline-block;
-    margin: 10px;
-    padding: 10px 20px;
-    border: 2px solid #333;
-    border-radius: 5px;
-    color: #333;
-    background-color: #fff4df;
+  .hero-overlay {
+    background: rgba(0, 0, 0, 0.5); /* Additional overlay for better text readability */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #ffcc00;
+    text-shadow: 2px 2px 4px #000;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+  }
+  
+  .btn {
+    padding: 10px 30px;
+    background: #ffcc00;
+    color: #333333;
+    border: none;
+    border-radius: 25px;
     text-decoration: none;
-    transition: all 0.3s ease;
-}
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  }
   
-/* Style for hover effect */
-  .list-group-item:hover {
-    background-color: #333;
-    color: #fff4df;
-}
+  .btn:hover {
+    background: #ffffff;
+    color: #333333;
+    transform: scale(1.05);
+  }
   
-/* Remove bullets from list items */
-  .list-group {
-    list-style-type: none;
-}
+  /* About Section */
+  .about-section {
+    padding: 60px 20px;
+    background: rgba(0, 0, 0, 0.7);
+    text-align: center;
+  }
+  
+  .about-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ffcc00;
+  }
+  
+  .about-section p {
+    font-size: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Planets List */
+  .planets-list {
+    padding: 60px 20px;
+    background: rgba(0, 0, 0, 0.7);
+    text-align: center;
+  }
+  
+  .planets-list h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ffcc00;
+  }
+  
+  .planets-list ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .planets-list li {
+    margin: 10px 20px;
+  }
+  
+  .planets-list a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    border: 2px solid #ffcc00;
+    border-radius: 5px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  .planets-list a:hover {
+    background: #ffcc00;
+    color: #333333;
+  }
+  
+  /* Facts Section */
+  .facts-section {
+    padding: 60px 20px;
+    background: rgba(0, 0, 0, 0.8);
+    text-align: center;
+  }
+  
+  .facts-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ffcc00;
+  }
+  
+  #fact-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    position: relative;
+  }
+  
+  .fact-text {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #ffffff;
+    position: relative;
+  }
+  
+  .fact-text::before {
+    content: "✨";
+    position: absolute;
+    left: -30px;
+    top: 0;
+    font-size: 1.5rem;
+  }
+  
+  .fact-text::after {
+    content: "✨";
+    position: absolute;
+    right: -30px;
+    top: 0;
+    font-size: 1.5rem;
+  }
+  
+  /* Footer Styles */
+  footer {
+    background: rgba(0, 0, 0, 0.8);
+    text-align: center;
+    padding: 20px;
+    position: relative;
+  }
+  
+  footer p {
+    color: #ffffff;
+    font-size: 0.9rem;
+  }
+  
+  /* For Responsive Styles */
+  @media (max-width: 768px) {
+    .nav-links {
+      position: fixed;
+      right: 0;
+      height: 100vh;
+      top: 60px;
+      background: rgba(0, 0, 0, 0.9);
+      flex-direction: column;
+      align-items: center;
+      width: 200px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+  
+    .nav-links.active {
+      transform: translateX(0);
+    }
+  
+    .nav-links li {
+      margin: 20px 0;
+    }
+  
+    .hamburger {
+      display: block;
+    }
+  
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+  
+    .hero p {
+      font-size: 1rem;
+    }
+  
+    .planets-list ul, .facts-section ul {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .planets-list li, .facts-section li {
+      margin: 10px 0;
+    }
+  
+    #fact-container {
+      padding: 15px;
+    }
+  
+    .fact-text {
+      font-size: 1.1rem;
+    }
+  
+    .fact-text::before,
+    .fact-text::after {
+      display: none;
+    }
+  }
+  
