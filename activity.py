@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2016, Cristian García <cristian99garcia@gmail.com>
+# Copyright (C) 2016, Cristian GarcĂ­a <cristian99garcia@gmail.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -16,6 +17,16 @@
 # License along with this library; if not, write to the
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
+
+
+import gettext
+import os
+
+LOCALE_DIR = os.path.join(os.path.dirname(__file__), 'locale')
+gettext.bindtextdomain('solar-system', LOCALE_DIR)
+gettext.textdomain('solar-system')
+_ = gettext.gettext
+
 
 from area import Area
 from infoview import InfoView
