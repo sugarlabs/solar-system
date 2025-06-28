@@ -1,0 +1,198 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-28 18:09-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: activity/activity.info:2
+msgid "Solar System"
+msgstr ""
+
+#: constants.py:144
+msgid "Sun"
+msgstr ""
+
+#: constants.py:146
+msgid "Mercury"
+msgstr ""
+
+#: constants.py:147
+msgid "Venus"
+msgstr ""
+
+#: constants.py:148
+msgid "Earth"
+msgstr ""
+
+#: constants.py:149
+msgid "Mars"
+msgstr ""
+
+#: constants.py:150
+msgid "Jupiter"
+msgstr ""
+
+#: constants.py:151
+msgid "Saturn"
+msgstr ""
+
+#: constants.py:152
+msgid "Uranus"
+msgstr ""
+
+#: constants.py:153
+msgid "Neptune"
+msgstr ""
+
+#: constants.py:155
+msgid "Moon"
+msgstr ""
+
+#: constants.py:156
+msgid "Fobos"
+msgstr ""
+
+#: constants.py:157
+msgid "Deimos"
+msgstr ""
+
+#: constants.py:158
+msgid "Io"
+msgstr ""
+
+#: constants.py:159
+msgid "Europa"
+msgstr ""
+
+#: constants.py:160
+msgid "Ganymede"
+msgstr ""
+
+#: constants.py:161
+msgid "Callisto"
+msgstr ""
+
+#: toolbars.py:63
+msgid "Show solar system"
+msgstr ""
+
+#: toolbars.py:69
+msgid "Show information"
+msgstr ""
+
+#: toolbars.py:76
+msgid "Go back"
+msgstr ""
+
+#: toolbars.py:82
+msgid "Go forward"
+msgstr ""
+
+#: toolbars.py:133
+msgid "Show planets orbits"
+msgstr ""
+
+#: toolbars.py:182 toolbars.py:214
+msgid "Stop"
+msgstr ""
+
+#: toolbars.py:188
+msgid "Run slow"
+msgstr ""
+
+#: toolbars.py:194
+msgid "Run Normal"
+msgstr ""
+
+#: toolbars.py:201
+msgid "Run fast"
+msgstr ""
+
+#: toolbars.py:224
+msgid "Start"
+msgstr ""
+
+#: toolbars.py:258
+msgid "What should you know before using Solar System?"
+msgstr ""
+
+#: toolbars.py:356
+msgid "Zoom out"
+msgstr ""
+
+#: toolbars.py:365
+msgid "Zoom in"
+msgstr ""
+
+#: toolbars.py:380
+msgid "What is the Solar System activity?"
+msgstr ""
+
+#: toolbars.py:382
+msgid "The Solar System activity is a tool to encourage children\n"
+msgstr ""
+
+#: toolbars.py:383
+msgid "to learn more about the planets and their moons (natural satellites).\n"
+msgstr ""
+
+#: toolbars.py:384
+msgid "It is my hope that this tool serves as a practical and interactve\n"
+msgstr ""
+
+#: toolbars.py:385
+msgid "way to explore astronomy.\n"
+msgstr ""
+
+#: toolbars.py:387
+msgid "About scales"
+msgstr ""
+
+#: toolbars.py:389
+msgid "The planets radius are on a scale with each other,\n"
+msgstr ""
+
+#: toolbars.py:390
+msgid "but not with respect to distances (which in turn,\n"
+msgstr ""
+
+#: toolbars.py:391
+msgid "are on scale with each other), and the Sun radius\n"
+msgstr ""
+
+#: toolbars.py:392
+msgid "does not respect either of the two scales.\n"
+msgstr ""
+
+#: toolbars.py:394
+msgid "Why did I make that decision?"
+msgstr ""
+
+#: toolbars.py:396
+msgid "Just because if I kept all the distances to the\n"
+msgstr ""
+
+#: toolbars.py:397
+msgid "same scale, you could not see anything (due to the\n"
+msgstr ""
+
+#: toolbars.py:398
+msgid "immense size of the space)."
+msgstr ""
+
+#: utils.py:128
+msgid "Unknown"
+msgstr ""
