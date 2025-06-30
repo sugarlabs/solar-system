@@ -2,195 +2,201 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Weblate Admin <weblate@sugarlabs.org>, 2025.
+# Erdem Uygun <erdem.uygun@eba.gov.tr>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-28 18:09-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-06-30 09:39+0000\n"
+"Last-Translator: Erdem Uygun <erdem.uygun@eba.gov.tr>\n"
+"Language-Team: Turkish <http://weblate.sugarlabs.org/projects/"
+"sugar-activities/solar-system/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.4.2\n"
 
 #: activity/activity.info:2
 msgid "Solar System"
-msgstr ""
+msgstr "Güneş Sistemi"
 
 #: constants.py:144
 msgid "Sun"
-msgstr ""
+msgstr "Güneş"
 
 #: constants.py:146
 msgid "Mercury"
-msgstr ""
+msgstr "Merkür"
 
 #: constants.py:147
 msgid "Venus"
-msgstr ""
+msgstr "Venüs"
 
 #: constants.py:148
 msgid "Earth"
-msgstr ""
+msgstr "Dünya"
 
 #: constants.py:149
 msgid "Mars"
-msgstr ""
+msgstr "Mars"
 
 #: constants.py:150
 msgid "Jupiter"
-msgstr ""
+msgstr "Jüpiter"
 
 #: constants.py:151
 msgid "Saturn"
-msgstr ""
+msgstr "Satürn"
 
 #: constants.py:152
 msgid "Uranus"
-msgstr ""
+msgstr "Uranüs"
 
 #: constants.py:153
 msgid "Neptune"
-msgstr ""
+msgstr "Neptün"
 
 #: constants.py:155
 msgid "Moon"
-msgstr ""
+msgstr "Ay"
 
 #: constants.py:156
 msgid "Fobos"
-msgstr ""
+msgstr "Fobos"
 
 #: constants.py:157
 msgid "Deimos"
-msgstr ""
+msgstr "Deimos"
 
 #: constants.py:158
 msgid "Io"
-msgstr ""
+msgstr "Io"
 
 #: constants.py:159
 msgid "Europa"
-msgstr ""
+msgstr "Europa"
 
 #: constants.py:160
 msgid "Ganymede"
-msgstr ""
+msgstr "Ganymede"
 
 #: constants.py:161
 msgid "Callisto"
-msgstr ""
+msgstr "Callisto"
 
 #: toolbars.py:63
 msgid "Show solar system"
-msgstr ""
+msgstr "Güneş sistemini göster"
 
 #: toolbars.py:69
 msgid "Show information"
-msgstr ""
+msgstr "Bilgiyi göster"
 
 #: toolbars.py:76
 msgid "Go back"
-msgstr ""
+msgstr "Geri git"
 
 #: toolbars.py:82
 msgid "Go forward"
-msgstr ""
+msgstr "İleri git"
 
 #: toolbars.py:133
 msgid "Show planets orbits"
-msgstr ""
+msgstr "Gezegen yörüngelerini göster"
 
 #: toolbars.py:182 toolbars.py:214
 msgid "Stop"
-msgstr ""
+msgstr "Dur"
 
 #: toolbars.py:188
 msgid "Run slow"
-msgstr ""
+msgstr "Yavaş çalıştır"
 
 #: toolbars.py:194
 msgid "Run Normal"
-msgstr ""
+msgstr "Normal Çalıştır"
 
 #: toolbars.py:201
 msgid "Run fast"
-msgstr ""
+msgstr "Hızlı çalıştır"
 
 #: toolbars.py:224
 msgid "Start"
-msgstr ""
+msgstr "Başlat"
 
 #: toolbars.py:258
 msgid "What should you know before using Solar System?"
-msgstr ""
+msgstr "Solar System'i kullanmadan önce bilmeniz gerekenler nelerdir?"
 
 #: toolbars.py:356
 msgid "Zoom out"
-msgstr ""
+msgstr "Uzaklaş"
 
 #: toolbars.py:365
 msgid "Zoom in"
-msgstr ""
+msgstr "Yakınlaş"
 
 #: toolbars.py:380
 msgid "What is the Solar System activity?"
-msgstr ""
+msgstr "Solar System etkinliği nedir?"
 
 #: toolbars.py:382
 msgid "The Solar System activity is a tool to encourage children\n"
 msgstr ""
+"Güneş Sistemi etkinliği, çocukların gezegenler ve onların uyduları (doğal "
+"uydular)\n"
 
 #: toolbars.py:383
 msgid "to learn more about the planets and their moons (natural satellites).\n"
-msgstr ""
+msgstr "hakkında daha fazla bilgi edinmelerini teşvik etmek için bir araçtır.\n"
 
 #: toolbars.py:384
 msgid "It is my hope that this tool serves as a practical and interactve\n"
-msgstr ""
+msgstr "Umarım bu araç, astronomiyi keşfetmek için pratik ve etkileşimli\n"
 
 #: toolbars.py:385
 msgid "way to explore astronomy.\n"
-msgstr ""
+msgstr "bir yol sunar.\n"
 
 #: toolbars.py:387
 msgid "About scales"
-msgstr ""
+msgstr "Ölçekler hakkında"
 
 #: toolbars.py:389
 msgid "The planets radius are on a scale with each other,\n"
-msgstr ""
+msgstr "Gezegenlerin yarıçapları birbirleriyle ölçeklidir,\n"
 
 #: toolbars.py:390
 msgid "but not with respect to distances (which in turn,\n"
-msgstr ""
+msgstr "ancak mesafelere göre değildir (ki mesafeler de\n"
 
 #: toolbars.py:391
 msgid "are on scale with each other), and the Sun radius\n"
-msgstr ""
+msgstr "kendi aralarında ölçeklidir). Güneş'in yarıçapı ise\n"
 
 #: toolbars.py:392
 msgid "does not respect either of the two scales.\n"
-msgstr ""
+msgstr "bu iki ölçekten hiçbirine uymaz.\n"
 
 #: toolbars.py:394
 msgid "Why did I make that decision?"
-msgstr ""
+msgstr "Bu kararı neden verdim?"
 
 #: toolbars.py:396
 msgid "Just because if I kept all the distances to the\n"
-msgstr ""
+msgstr "Çünkü tüm mesafeleri aynı ölçekte tutsaydım,\n"
 
 #: toolbars.py:397
 msgid "same scale, you could not see anything (due to the\n"
-msgstr ""
+msgstr "hiçbir şey göremezdiniz (uzayın\n"
 
 #: toolbars.py:398
 msgid "immense size of the space)."
-msgstr ""
+msgstr "muazzam büyüklüğü nedeniyle)."
 
 #: utils.py:128
 msgid "Unknown"
-msgstr ""
+msgstr "Bilinmeyen"
